@@ -1,0 +1,186 @@
+{
+  "description": "Additional tests in same form as JSONPath Compliance Test Suite.",
+  "tests": [
+    {
+      "name": "multiple slice selectors, positive and negative steps",
+      "selector": "$[2:5:1,-2:-4:-1,1:2:1,4:1:-1,1:3:-1]",
+      "document": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "result": [
+        2,3,4,5,4,1,4,3,2
+      ],
+      "result_paths": [
+        "$[2]",
+        "$[3]",
+        "$[4]",
+        "$[5]",
+        "$[4]",
+        "$[1]",
+        "$[4]",
+        "$[3]",
+        "$[2]"
+      ],
+      "tags": [
+        "slice"
+      ]
+    },
+    {
+      "name": "filter, match, special function",
+      "selector": "$[?@.*[?match(@, '[A-J]')]]",
+      "document":     [
+        [ { "a" :  "A"} ],
+        [ { "b" :  "B"} ],
+        [ { "c" :  "C"} ],
+        [ { "x" :  "X"} ],
+        [ { "y" :  "Y"} ],
+        [ { "z" :  "Z"} ]
+      ],
+      "result": [
+        [ { "a" :  "A"} ],
+        [ { "b" :  "B"} ],
+        [ { "c" :  "C"} ]
+      ],
+      "result_paths": [
+        "$[0]",
+        "$[1]",
+        "$[2]"
+      ],
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, unknown function",
+      "selector": "$[?not_a_function(@, '[A-J]')]",
+      "invalid_selector" :  true,
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, value argument, non-singular query",
+      "selector": "$[?length($.*)==4]",
+      "invalid_selector" : true,
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, nodes formal parameter, value argument",
+      "selector": "$[?count(length($.*))==4]",
+      "invalid_selector" : true,
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, value formal parameter, logical-expr argument, non-singular-query",
+      "selector": "$[?length($.a || $.b)==4]",
+      "invalid_selector" : true,
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, boolean argument, string true",
+      "selector": "$[?boolstr('true')=='true']",
+      "invalid_selector" : true,
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, boolean argument, string false",
+      "selector": "$[?boolstr('false')=='false']",
+      "invalid_selector" : true,
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, boolean argument, boolean false",
+      "selector": "$[?boolstr(false)=='false']",
+      "document":     [
+        [ { "a" :  "A" } ],
+        [ { "b" :  "B" } ]
+      ],
+      "result": [
+        [ { "a" :  "A" } ],
+        [ { "b" :  "B" } ]
+      ],
+      "result_paths": [
+        "$[0]",
+        "$[1]"
+      ],
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, boolean argument, boolean true",
+      "selector": "$[?boolstr(true)=='true']",
+      "document":     [
+        [ { "a" :  "A" } ],
+        [ { "b" :  "B" } ]
+      ],
+      "result": [
+        [ { "a" :  "A" } ],
+        [ { "b" :  "B" } ]
+      ],
+      "result_paths": [
+        "$[0]",
+        "$[1]"
+      ],
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, boolean argument, boolean true, string mismatch",
+      "selector": "$[?boolstr(true)=='false']",
+      "document":     [
+        [ { "a" :  "A" } ],
+        [ { "b" :  "B" } ]
+      ],
+      "result": [ ],
+      "result_paths": [ ],
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "filter, function, nodes argument, nodes type",
+      "selector": "$[?value(identity($.a))==$.a]",
+      "document": [
+        [ { "a" :  "A" } ],
+        [ { "b" :  "B" } ]
+      ],
+      "result": [
+                  [ { "a" :  "A" } ],
+                  [ { "b" :  "B" } ]
+                ],
+      "result_paths": [ "$[0]", "$[1]" ],
+      "tags": [
+        "filter",
+        "match"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+[submodule "src/test/resources/submodules/json-path-comparison"]
+	path = src/test/resources/submodules/json-path-comparison
+	url = git@github.com:cburgmer/json-path-comparison
+[submodule "src/test/resources/submodules/jsonpath-compliance-test-suite"]
+	path = src/test/resources/submodules/jsonpath-compliance-test-suite
+	url = git@github.com:jsonpath-standard/jsonpath-compliance-test-suite
