@@ -19,11 +19,11 @@
         <xsl:sequence select="ajp:getSegments($jsonpathQuery)" />
     </xsl:function>
 
-    <xsl:function name="ajpr:processSegments" as="map(xs:string, item()?)*"           visibility="public">
-        <xsl:param name="root"                as="item()?"                               />
-        <xsl:param name="segments"            as="map(xs:string, array(function(*))* )*" />
+    <xsl:function name="ajpr:applySegments" as="map(xs:string, item()?)*"             visibility="public">
+        <xsl:param name="root"              as="item()?"                               />
+        <xsl:param name="segments"          as="map(xs:string, array(function(*))* )*" />
 
-        <xsl:sequence select="ajp:processSegments($root, $segments)" />
+        <xsl:sequence select="ajp:applySegments($root, $segments)" />
     </xsl:function>
 
     <xsl:variable name="LT" as="xs:string" select="'&lt;'" />

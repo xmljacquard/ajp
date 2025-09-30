@@ -17,12 +17,12 @@ public class AjpRunner {
 
     public static final String AJPR_NAMESPACE   = "http://xmljacquard.org/ajp/runner";
 
-    public static final QName  GET_SEGMENTS     = new QName(AJPR_NAMESPACE, "getSegments"    );
-    public static final QName  PROCESS_SEGMENTS = new QName(AJPR_NAMESPACE, "processSegments");
-    public static final QName  ERROR_SUMMARY    = new QName(AJPR_NAMESPACE, "errorSummary"   );
-    public static final QName  ARRAY_OF_VALUES  = new QName(AJPR_NAMESPACE, "arrayOfValues"  );
-    public static final QName  ARRAY_OF_PATHS   = new QName(AJPR_NAMESPACE, "arrayOfPaths"   );
-    public static final QName  ARRAY_OF_NODES   = new QName(AJPR_NAMESPACE, "arrayOfNodes"   );
+    public static final QName  GET_SEGMENTS     = new QName(AJPR_NAMESPACE, "getSegments"  );
+    public static final QName  APPLY_SEGMENTS   = new QName(AJPR_NAMESPACE, "applySegments");
+    public static final QName  ERROR_SUMMARY    = new QName(AJPR_NAMESPACE, "errorSummary" );
+    public static final QName  ARRAY_OF_VALUES  = new QName(AJPR_NAMESPACE, "arrayOfValues");
+    public static final QName  ARRAY_OF_PATHS   = new QName(AJPR_NAMESPACE, "arrayOfPaths" );
+    public static final QName  ARRAY_OF_NODES   = new QName(AJPR_NAMESPACE, "arrayOfNodes" );
 
     private final XsltExecutable xsltExecutable = getXsltExecutable();
 
@@ -51,7 +51,7 @@ public class AjpRunner {
         if (compiledQuery == null) {
             throw new IllegalStateException("must call withQuery() to compile the query before retrieving values");
         }
-        return xsltExecutable.load30().callFunction( PROCESS_SEGMENTS, new XdmValue[] { jsonValue, compiledQuery } );
+        return xsltExecutable.load30().callFunction(APPLY_SEGMENTS, new XdmValue[] { jsonValue, compiledQuery } );
     }
 
     public String getErrorSummary(final SaxonApiException e) throws SaxonApiException {

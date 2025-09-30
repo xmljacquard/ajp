@@ -11,17 +11,17 @@
     <xsl:include href="unicode.xslt" />
 
     <!-- RFC9535 Section 2.1.2 -->
-    <xsl:function name="ajp:processSegments" as="map(xs:string, item()?)*"               >
-        <xsl:param name="nodelist"           as="map(xs:string, item()?)*"              />
-        <xsl:param name="segments"           as="map(xs:string, array(function(*))* )*" />
-        <xsl:param name="root"               as="item()?"                               />
+    <xsl:function name="ajp:applySegments" as="map(xs:string, item()?)*"               >
+        <xsl:param name="nodelist"         as="map(xs:string, item()?)*"              />
+        <xsl:param name="segments"         as="map(xs:string, array(function(*))* )*" />
+        <xsl:param name="root"             as="item()?"                               />
 
         <xsl:sequence select="if (empty($segments))
                               then $nodelist
                               else let $resultNodelist := if (ajp:key(head($segments)) eq 'child')
                                                           then ajp:children   ($nodelist, head($segments)?*, $root)
                                                           else ajp:descendants($nodelist, head($segments)?*, $root)
-                                   return ajp:processSegments($resultNodelist, tail($segments), $root)
+                                   return ajp:applySegments($resultNodelist, tail($segments), $root)
                              " />
     </xsl:function>
 

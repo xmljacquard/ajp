@@ -78,10 +78,10 @@
     </xsl:function>
 
     <!-- Process the segments contained by a sub-query within a filter selector -->
-    <xsl:function name="ajp:processSubSegments" as="map(xs:string, item()?)*" >
-        <xsl:param name="key"      as="item()"                                 />
-        <xsl:param name="item"     as="item()?"                                />
-        <xsl:param name="root"     as="item()?"                                />
+    <xsl:function name="ajp:applySubSegments" as="map(xs:string, item()?)*" >
+        <xsl:param name="key"      as="item()"                             />
+        <xsl:param name="item"     as="item()?"                            />
+        <xsl:param name="root"     as="item()?"                            />
 
         <xsl:param name="segments" as="map( xs:string, array(function(*))* )*" />
         <xsl:param name="relative" as="xs:boolean"                             />
@@ -92,7 +92,7 @@
                               else map { '$' : $root       }
                              "/>
 
-        <xsl:sequence select="ajp:processSegments($startNodelist, $segments, $root)" />
+        <xsl:sequence select="ajp:applySegments($startNodelist, $segments, $root)" />
     </xsl:function>
 
     <xsl:function name="ajp:logicalOrExpr" as="xs:boolean" >

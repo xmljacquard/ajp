@@ -32,14 +32,14 @@
          limitations under the License.
     -->
 
-    <xsl:include href="get-segments.xslt"     />
-    <xsl:include href="process-segments.xslt" />
+    <xsl:include href="get-segments.xslt"   />
+    <xsl:include href="apply-segments.xslt" />
 
     <xsl:expose component="*"        names="*"                             visibility="private" />
 
     <!-- The following two functions are the only two that are required for JSONPATH processing -->
     <xsl:expose component="function" names="ajp:getSegments#1"             visibility="public"  />
-    <xsl:expose component="function" names="ajp:processSegments#2"         visibility="public"  />
+    <xsl:expose component="function" names="ajp:applySegments#2"           visibility="public"  />
 
     <!-- This function allow retrieving the abstract syntax tree of the query                  -->
     <xsl:expose component="function" names="ajp:getAST#1"                  visibility="public"  />
@@ -80,12 +80,12 @@
         <xsl:apply-templates select="ajp:getAST($jsonpathQuery)" />
     </xsl:function>
 
-    <xsl:function name="ajp:processSegments" as="map(xs:string, item()?)*"             >
+    <xsl:function name="ajp:applySegments" as="map(xs:string, item()?)*"               >
         <xsl:param name="root"             as="item()?"                               />
         <xsl:param name="segments"         as="map(xs:string, array(function(*))* )*" />
 
         <xsl:sequence select="let $startNodelist  := map { '$' : $root },
-                                  $returnNodelist := ajp:processSegments($startNodelist, $segments, $root)
+                                  $returnNodelist := ajp:applySegments($startNodelist, $segments, $root)
                               return ajp:convertNulls($returnNodelist)" />
     </xsl:function>
 

@@ -90,7 +90,7 @@ respective test stylesheets from java.
 correspond to the query. The "segments" are compiled from the Abstract Syntax Tree (AST) returned 
 by `ixml` (Invisible XML).
 
-- `function ajp:processSegments($root as item()?, $segments as map( xs:string, array(function(*))* )*) as map(xs:string, item()?)* `
+- `function ajp:applySegments($root as item()?, $segments as map( xs:string, array(function(*))* )*) as map(xs:string, item()?)* `
 
 This function takes the segments returned by `ajp:getSegments()` and the query argument json value and 
 returns the `nodelist` that corresponds to the processing of the query on the query argument.
@@ -106,7 +106,7 @@ This can be useful for debugging but is not required for processing as `ajp:getS
 - `functiopn ajp:arrayOfValues($nodelist as map(xs:string, item()?)*) as array(item()?)`
 - `functiopn ajp:arrayOfPaths($nodelist as map(xs:string, item()?)*) as array(xs:string)`
 
-These two functions take the output `nodelist` from `ajp:processSegments` and return an array of either 
+These two functions take the output `nodelist` from `ajp:applySegments` and return an array of either 
 the "values" or the "locations" from the nodes in the `nodelist`.
 
 - `function ajp:errorSummary($error_code as xs:QName, $error_description as xs:string) as xs:string`

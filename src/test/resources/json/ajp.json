@@ -181,6 +181,54 @@
         "filter",
         "match"
       ]
+    },
+    {
+      "name": "a random example",
+      "selector": "$..['a', 'e', 0]",
+      "document": { "a" : 1.00,
+                    "b" : "hello",
+                    "c" : true,
+                    "d" : null,
+                    "e" : [ 42, 23 ]
+                  },
+      "result": [ 1, [42, 23], 42],
+      "result_paths": [ "$['a']", "$['e']", "$['e'][0]" ],
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "another random example",
+      "selector": "$..['a', 'e', 0]..[1]",
+      "document": { "a" : 1.00,
+        "b" : "hello",
+        "c" : true,
+        "d" : null,
+        "e" : [ 42, 23 ]
+      },
+      "result": [ 23 ],
+      "result_paths": [ "$['e'][1]" ],
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "yet another random example",
+      "selector": "$.e[1]",
+      "document": { "a" : 1.00,
+        "b" : "hello",
+        "c" : true,
+        "d" : null,
+        "e" : [ 42, 23 ]
+      },
+      "result": [ 23 ],
+      "result_paths": [ "$['e'][1]" ],
+      "tags": [
+        "filter",
+        "match"
+      ]
     }
   ]
 }

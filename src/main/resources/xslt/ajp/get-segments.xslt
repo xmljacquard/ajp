@@ -245,7 +245,7 @@
             <xsl:apply-templates select="*/segments" />
         </xsl:variable>
 
-        <xsl:sequence select="ajp:processSubSegments(?, ?, ?, $segments, exists(rel-query))" />
+        <xsl:sequence select="ajp:applySubSegments(?, ?, ?, $segments, exists(rel-query))" />
     </xsl:template>
 
     <xsl:template match="singular-query" as="function(item(), item()?, item()?) as map(xs:string, item()?)*" >
@@ -255,7 +255,7 @@
             <xsl:apply-templates select="*/singular-query-segments" />
         </xsl:variable>
 
-        <xsl:sequence select="ajp:processSubSegments(?, ?, ?, $segments, exists(rel-singular-query))" />
+        <xsl:sequence select="ajp:applySubSegments(?, ?, ?, $segments, exists(rel-singular-query))" />
     </xsl:template>
 
     <xsl:template match="singular-query-segments" as="map( xs:string, array(function(*))* )*" >

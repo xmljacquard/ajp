@@ -14,7 +14,7 @@
 
     <xsl:use-package name="http://xmljacquard.org/ajp" package-version="*"/>
 
-    <xsl:include href="tests-common.xslt"      />
+    <xsl:include href="tests-common.xslt" />
 
     <xsl:param name="ctsTestsURI" as="xs:string" />
     <xsl:param name="ajpTestsURI" as="xs:string" />
@@ -248,7 +248,7 @@
 
                 <xsl:variable name="output" as="map(xs:string, item()?)*"
                               select="if (map:keys($getSegmentsMap) = 'segments')
-                                      then ajp:processSegments($test?document, $getSegmentsMap?segments)
+                                      then ajp:applySegments($test?document, $getSegmentsMap?segments)
                                       else ()
                                      " />
 

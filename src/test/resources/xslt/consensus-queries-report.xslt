@@ -241,7 +241,7 @@
 
             <xsl:variable name="output" as="map(xs:string, item()?)*"
                           select="if (map:keys($getSegmentsMap) = 'segments')
-                                  then ajp:processSegments($queryArg, $getSegmentsMap?segments)
+                                  then ajp:applySegments($queryArg, $getSegmentsMap?segments)
                                   else ()
                                  " />
 
