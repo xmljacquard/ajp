@@ -80,6 +80,7 @@
         <xsl:apply-templates select="ajp:getAST($jsonpathQuery)" />
     </xsl:function>
 
+    <!-- RFC9535 2.1.2.  Semantics -->
     <xsl:function name="ajp:applySegments" as="map(xs:string, item()?)*"               >
         <xsl:param name="root"             as="item()?"                               />
         <xsl:param name="segments"         as="map(xs:string, array(function(*))* )*" />
