@@ -229,6 +229,28 @@
         "filter",
         "match"
       ]
+    },
+    {
+      "name": "query argument that is literal null, trivial query",
+      "selector": "$",
+      "document": null,
+      "result": [ null ],
+      "result_paths": [ "$" ],
+      "tags": [
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "name": "query argument that is literal null, one segment",
+      "selector": "$[0]",
+      "document": null,
+      "result": [ ],
+      "result_paths": [ ],
+      "tags": [
+        "filter",
+        "match"
+      ]
     }
   ]
 }

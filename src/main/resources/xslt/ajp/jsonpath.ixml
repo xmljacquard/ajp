@@ -9,12 +9,13 @@ segments                = ( S , segment )* .
 
 segment                 = child-segment | descendant-segment .
 
-child-segment           = bracketed-selection                                      |
-                          ( -"." , ( wildcard-selector | member-name-shorthand ) ) .
+child-segment           =             bracketed-selection       |
+                          ( - "." , ( wildcard-selector |
+                                      member-name-shorthand ) ) .
 
-descendant-segment      = - ".." , ( bracketed-selection |
-                                     wildcard-selector   |
-                                     member-name-shorthand ) .
+descendant-segment      =  - ".." , ( bracketed-selection |
+                                      wildcard-selector   |
+                                      member-name-shorthand ) .
 
 -bracketed-selection    = - "[" , S ,
                                 selector ,
@@ -86,10 +87,8 @@ hexchar                 = non-surrogate                                    |
 -non-surrogate          = ( ( DIGIT  |    ["Aa"; "Bb"; "Cc";  "Ee"; "Ff"]  ) , HEXDIG3 ) |
                           ( ( [ "Dd" ] ,  [ "0"-"7" ]                      ) , HEXDIG2 ) .
 
-
 high-surrogate          = [ "Dd" ] , [ "8";  "9"; "Aa"; "Bb"] , HEXDIG2 .
 low-surrogate           = [ "Dd" ] , ["Cc"; "Dd"; "Ee"; "Ff"] , HEXDIG2 .
-
 
 -HEXDIG3                 = HEXDIG , HEXDIG , HEXDIG .
 -HEXDIG2                 = HEXDIG , HEXDIG          .

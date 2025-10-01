@@ -324,6 +324,7 @@
         </xsl:choose>
     </xsl:template>
 
+    <!-- RFC9535 Section 2.4.3 Well-Typedness of Function Expressions -->
     <xsl:template match="function-argument[filter-query]" as="function(item(), item()?, item()?) as item()*" >
         <xsl:param name="functionName" as="xs:string" />
 

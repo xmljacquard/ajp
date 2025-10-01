@@ -79,9 +79,9 @@
 
     <!-- Process the segments contained by a sub-query within a filter selector -->
     <xsl:function name="ajp:applySubSegments" as="map(xs:string, item()?)*" >
-        <xsl:param name="key"      as="item()"                             />
-        <xsl:param name="item"     as="item()?"                            />
-        <xsl:param name="root"     as="item()?"                            />
+        <xsl:param name="key"      as="item()"                                 />
+        <xsl:param name="item"     as="item()?"                                />
+        <xsl:param name="root"     as="item()?"                                />
 
         <xsl:param name="segments" as="map( xs:string, array(function(*))* )*" />
         <xsl:param name="relative" as="xs:boolean"                             />
@@ -96,9 +96,10 @@
     </xsl:function>
 
     <xsl:function name="ajp:logicalOrExpr" as="xs:boolean" >
-        <xsl:param name="key"      as="item()"  />
-        <xsl:param name="item"     as="item()?" />
-        <xsl:param name="root"     as="item()?" />
+        <xsl:param name="key"      as="item()"                                              />
+        <xsl:param name="item"     as="item()?"                                             />
+        <xsl:param name="root"     as="item()?"                                             />
+
         <xsl:param name="operands" as="(function(item(), item()?, item()?) as xs:boolean)*" />
 
         <xsl:sequence select="some $operand in $operands
@@ -106,9 +107,10 @@
     </xsl:function>
 
     <xsl:function name="ajp:logicalAndExpr" as="xs:boolean" >
-        <xsl:param name="key"      as="item()"  />
-        <xsl:param name="item"     as="item()?" />
-        <xsl:param name="root"     as="item()?" />
+        <xsl:param name="key"      as="item()"                                              />
+        <xsl:param name="item"     as="item()?"                                             />
+        <xsl:param name="root"     as="item()?"                                             />
+
         <xsl:param name="operands" as="(function(item(), item()?, item()?) as xs:boolean)*" />
 
         <xsl:sequence select="every $operand in $operands
@@ -116,18 +118,20 @@
     </xsl:function>
 
     <xsl:function name="ajp:logicalNotExpr" as="xs:boolean" >
-        <xsl:param name="key"      as="item()"  />
-        <xsl:param name="item"     as="item()?" />
-        <xsl:param name="root"     as="item()?" />
+        <xsl:param name="key"      as="item()"                                           />
+        <xsl:param name="item"     as="item()?"                                          />
+        <xsl:param name="root"     as="item()?"                                          />
+
         <xsl:param name="operand"  as="function(item(), item()?, item()?) as xs:boolean" />
 
         <xsl:sequence select="not($operand($key, $item, $root))" />
     </xsl:function>
 
     <xsl:function name="ajp:nodesToLogical" as="xs:boolean" >
-        <xsl:param name="key"      as="item()"  />
-        <xsl:param name="item"     as="item()?" />
-        <xsl:param name="root"     as="item()?" />
+        <xsl:param name="key"      as="item()"                                                         />
+        <xsl:param name="item"     as="item()?"                                                        />
+        <xsl:param name="root"     as="item()?"                                                        />
+
         <xsl:param name="operand"  as="function(item(), item()?, item()?) as map(xs:string, item()?)*" />
 
         <xsl:sequence select="count($operand($key, $item, $root)) gt 0" />
@@ -135,9 +139,9 @@
 
     <!-- RFC9535 Section 2.3.5.2.2.  Comparisons -->
     <xsl:function name="ajp:comparisonExpr" as="xs:boolean" >
-        <xsl:param name="key"       as="item()"  />
-        <xsl:param name="item"      as="item()?" />
-        <xsl:param name="root"      as="item()?" />
+        <xsl:param name="key"       as="item()"                                        />
+        <xsl:param name="item"      as="item()?"                                       />
+        <xsl:param name="root"      as="item()?"                                       />
 
         <xsl:param name="operand1F" as="function(item(), item()?, item()?) as item()?" />
         <xsl:param name="operator"  as="xs:string"                                     />
@@ -234,9 +238,9 @@
 
     <!-- RFC9535 Section 2.4.3.  Well-Typedness of Function Expressions  Point 2 (singular query) -->
     <xsl:function name="ajp:singularQuery" as="item()" >
-        <xsl:param name="key"   as="item()"  />
-        <xsl:param name="item"  as="item()?" />
-        <xsl:param name="root"  as="item()?" />
+        <xsl:param name="key"   as="item()"                                                         />
+        <xsl:param name="item"  as="item()?"                                                        />
+        <xsl:param name="root"  as="item()?"                                                        />
 
         <xsl:param name="query" as="function(item(), item()?, item()?) as map(xs:string, item()?)*" />
 
