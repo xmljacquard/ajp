@@ -76,16 +76,16 @@
             </tr>
             <tr>
                <td>ajp</td>
-               <td>15</td>
-               <td>15</td>
+               <td>17</td>
+               <td>17</td>
                <td>0</td>
             </tr>
          </tbody>
          <tfoot class="summary normal-parse-error">
             <tr>
                <td>Total</td>
-               <td>707</td>
-               <td>707</td>
+               <td>709</td>
+               <td>709</td>
                <td>0</td>
             </tr>
          </tfoot>
@@ -7405,6 +7405,28 @@
                   <td class="col-6">{"a":1,"b":"hello","c":true,"d":null,"e":[42,23]}</td>
                   <td class="col-7">[23]</td>
                   <td class="col-8">["$['e'][1]"]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">16</td>
+                  <td class="centered col-1">ajp</td>
+                  <td class="col-2">query argument that is literal null, trivial query</td>
+                  <td class="centered col-3 passed">✓</td>
+                  <td class="centered col-4 parses">✓</td>
+                  <td class="col-5">$</td>
+                  <td class="col-6">null</td>
+                  <td class="col-7">[null]</td>
+                  <td class="col-8">["$"]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">17</td>
+                  <td class="centered col-1">ajp</td>
+                  <td class="col-2">query argument that is literal null, one segment</td>
+                  <td class="centered col-3 passed">✓</td>
+                  <td class="centered col-4 parses">✓</td>
+                  <td class="col-5">$[0]</td>
+                  <td class="col-6">null</td>
+                  <td class="col-7">[]</td>
+                  <td class="col-8">[]</td>
                </tr>
             </tbody>
          </table>
