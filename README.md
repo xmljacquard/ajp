@@ -28,7 +28,7 @@ The java unit tests generate two reports that give information about
 compliance with JSONPATH/RFC9535.
 
 The first report, 
-[https://xmljacquard.github.io/ajp/ajp-compliance-tests-report.html](ajp-compliance-tests-report.html),
+[ajp-compliance-tests-report.html](https://xmljacquard.github.io/ajp/ajp-compliance-tests-report.html),
 shows the output of the Jsonpath Compliance Test Suite (cts) tests 
 and compares them to the expected output. This report shows all 
 tests results as compliant, producing either identical output to the 
@@ -36,7 +36,7 @@ test suite's or producing a query compilation error for tests with
 `invalid_selector: true` set.
 
 The second report,
-[https://xmljacquard.github.io/ajp/ajp-consensus-report.html](ajp-consensus-report.html),
+[ajp-consensus-report.html](https://xmljacquard.github.io/ajp/ajp-consensus-report.html),
 shows the output of `ajp` compared against the consensus. It is important to note
 that some consensus outputs are not RFC9535 compliant, hence there are
 three tests with differences. Furthermore, for many of the comparison tests,
