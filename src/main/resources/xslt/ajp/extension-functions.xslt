@@ -106,7 +106,7 @@
     <xsl:function name= "ajp:getExtFunc" as="map(*)" >
         <xsl:param name="name" as="xs:string" />
 
-        <xsl:sequence select="if ($name = map:keys($extensionFunctions))
+        <xsl:sequence select="if (map:contains($extensionFunctions, $name))
                               then $extensionFunctions($name)
                               else ajp:error('FCT', 1, 'unknown function extension: ' || $name || '().')
                              " />

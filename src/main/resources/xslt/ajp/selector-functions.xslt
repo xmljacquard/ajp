@@ -32,7 +32,7 @@
         <xsl:sequence select="if (($item instance of map(*))
                                     and
                                   ($match instance of xs:string))
-                              then $match[. = map:keys($item)]
+                              then $match[ map:contains($item, $match) ]
                               else ()" />
     </xsl:function>
 

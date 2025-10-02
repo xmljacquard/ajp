@@ -108,7 +108,7 @@
 
         <xsl:sequence select="for $map in $nodelist
                               return if ($map?* instance of node() and $map?* is $NULL)
-                                     then map:entry(map:keys($map), ())
+                                     then map:entry(ajp:key($map), ())
                                      else $map" />
     </xsl:function>
 
@@ -158,7 +158,7 @@
         <xsl:param name="zero" as="item()*" />
         <xsl:param name="seq"  as="item()"  />
 
-        <xsl:sequence select="array:append($zero, map:keys($seq))" />
+        <xsl:sequence select="array:append($zero, ajp:key($seq))" />
     </xsl:function>
 
     <xsl:function name="ajp:appendNode" as="array(map(xs:string, item()?))" >

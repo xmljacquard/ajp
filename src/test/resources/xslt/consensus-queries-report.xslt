@@ -240,7 +240,7 @@
             </xsl:variable>
 
             <xsl:variable name="output" as="map(xs:string, item()?)*"
-                          select="if (map:keys($getSegmentsMap) = 'segments')
+                          select="if (map:contains($getSegmentsMap, 'segments'))
                                   then ajp:applySegments($queryArg, $getSegmentsMap?segments)
                                   else ()
                                  " />
@@ -248,20 +248,20 @@
             <result>
                     <number>{       position()                                          }</number>
                     <name>{         $testName                                           }</name>
-                    <parsed>{       map:keys($getSegmentsMap) = 'segments'              }</parsed>
+                    <parsed>{       map:contains($getSegmentsMap, 'segments')           }</parsed>
                     <query>{        $query
                                           => ajp:replaceHigherPlaneChars()
                                           => ajp:escape()                               }</query>
                     <queryArg>{     tests:prettyPrintJson( $queryArg )
                                           => ajp:replaceHigherPlaneChars()
                                           => ajp:escape()                               }</queryArg>
-                <xsl:if test="map:keys($getSegmentsMap) = 'segments'" >
+                <xsl:if test="map:contains($getSegmentsMap, 'segments')" >
                     <outputValues>{ tests:prettyPrintJson( ajp:arrayOfValues($output) )
                                           => ajp:replaceHigherPlaneChars()
                                           => ajp:escape()                               }</outputValues>
                     <outputPaths>{  tests:prettyPrintJson( ajp:arrayOfPaths ($output) ) }</outputPaths>
                 </xsl:if>
-                <xsl:if test="map:keys($getSegmentsMap) = 'error'" >
+                <xsl:if test="map:contains($getSegmentsMap, 'error')" >
                     <parseError>{   $getSegmentsMap?error                               }</parseError>
                 </xsl:if>
             </result>

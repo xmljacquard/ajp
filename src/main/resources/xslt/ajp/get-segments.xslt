@@ -69,7 +69,6 @@
     <xsl:template match="slice-selector"        as="array(function(*))" >
 
         <!-- Check the integer values of the slice parameters -->
-        <xsl:variable name="sliceSelector" as="element()" select="." />
         <xsl:for-each select="start | end | step" >
             <xsl:if test="not(ajp:isValidIJsonInteger(xs:integer(.)))" >
                 <xsl:sequence select="ajp:error('SEL', 2, 'integer value of slice parameter ' ||
@@ -138,7 +137,7 @@
 
         <xsl:sequence select="if (exists(logical-not-op))
                               then ajp:logicalNotExpr(?, ?, ?, $queryToLogical)
-                              else                           $queryToLogical
+                              else                             $queryToLogical
                              " />
     </xsl:template>
 

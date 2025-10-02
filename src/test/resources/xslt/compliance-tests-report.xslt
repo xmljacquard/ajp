@@ -247,7 +247,7 @@
                 </xsl:variable>
 
                 <xsl:variable name="output" as="map(xs:string, item()?)*"
-                              select="if (map:keys($getSegmentsMap) = 'segments')
+                              select="if (map:contains($getSegmentsMap, 'segments'))
                                       then ajp:applySegments($test?document, $getSegmentsMap?segments)
                                       else ()
                                      " />
@@ -265,13 +265,13 @@
                         <queryArg>{     tests:prettyPrintJson( $test?document )
                                               => ajp:replaceHigherPlaneChars()
                                               => ajp:escape()                               }</queryArg>
-                    <xsl:if test="map:keys($getSegmentsMap) = 'segments'" >
+                    <xsl:if test="map:contains($getSegmentsMap, 'segments')" >
                         <outputValues>{ tests:prettyPrintJson( ajp:arrayOfValues($output) )
                                               => ajp:replaceHigherPlaneChars()
                                               => ajp:escape()                               }</outputValues>
                         <outputPaths>{  tests:prettyPrintJson( ajp:arrayOfPaths ($output) ) }</outputPaths>
                     </xsl:if>
-                    <xsl:if test="map:keys($getSegmentsMap) = 'error'" >
+                    <xsl:if test="map:contains($getSegmentsMap, 'error')" >
                         <parseError>{   $getSegmentsMap?error                               }</parseError>
                     </xsl:if>
                 </result>
@@ -285,7 +285,7 @@
         <xsl:param name="getSegmentsMap" as="map(*)"                   />
         <xsl:param name="output"         as="map(xs:string, item()?)*" />
 
-        <xsl:sequence select="($test?invalid_selector and map:keys($getSegmentsMap) = 'error')
+        <xsl:sequence select="($test?invalid_selector and map:contains($getSegmentsMap, 'error'))
                                or
                               tests:compareValues($test, $output) and tests:comparePaths($test, $output)
                              " />
@@ -297,9 +297,9 @@
         <xsl:param name="output" as="map(xs:string, item()?)*" />
 
         <xsl:sequence select="let $values := ajp:arrayOfValues($output)
-                              return if (map:keys($test) = 'invalid_selector')
+                              return if (map:contains($test, 'invalid_selector'))
                                      then false()
-                                     else if (map:keys($test) = 'result')
+                                     else if (map:contains($test, 'result'))
                                      then deep-equal($test?result, $values)
                                      else
                                         some $altTestResult in $test?results?*
@@ -312,9 +312,9 @@
         <xsl:param name="output" as="map(xs:string, item()?)*" />
 
         <xsl:sequence select="let $paths := ajp:arrayOfPaths($output)
-                              return if (map:keys($test) = 'invalid_selector')
+                              return if (map:contains($test, 'invalid_selector'))
                                      then false()
-                                     else if (map:keys($test) = 'result_paths')
+                                     else if (map:contains($test, 'result_paths'))
                                      then deep-equal($test?result_paths, $paths)
                                      else
                                         some $altTestPaths in $test?results_paths?*
