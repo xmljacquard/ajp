@@ -106,9 +106,10 @@ This can be useful for debugging but is not required for processing as `ajp:getS
 
 - `functiopn ajp:arrayOfValues($nodelist as map(xs:string, item()?)*) as array(item()?)`
 - `functiopn ajp:arrayOfPaths($nodelist as map(xs:string, item()?)*) as array(xs:string)`
+- `functiopn ajp:arrayOfNodes($nodelist as map(xs:string, item()?)*) as array(map(xs:string, item()?))`
 
-These two functions take the output `nodelist` from `ajp:applySegments` and return an array of either 
-the "values" or the "locations" from the nodes in the `nodelist`.
+These three functions take the output `nodelist` from `ajp:applySegments` and return an array of either 
+the "values", "locations" or the singleton `node` maps from the nodes in the `nodelist`.
 
 - `function ajp:errorSummary($error_code as xs:QName, $error_description as xs:string) as xs:string`
 
