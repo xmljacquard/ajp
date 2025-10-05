@@ -12,29 +12,29 @@
 
     <xsl:mode on-no-match="fail"/>
 
-    <xsl:template match="/"                  as="map( xs:string, array(function(*))* )*" >
+    <xsl:template match="/"                  as="map( xs:string, array(function(*))+ )*" >
         <xsl:apply-templates />
     </xsl:template>
 
-    <xsl:template match="jsonpath-query"     as="map( xs:string, array(function(*))* )*" >
+    <xsl:template match="jsonpath-query"     as="map( xs:string, array(function(*))+ )*" >
         <xsl:apply-templates />
     </xsl:template>
 
-    <xsl:template match="segments"           as="map( xs:string, array(function(*))* )*" >
+    <xsl:template match="segments"           as="map( xs:string, array(function(*))+ )*" >
         <xsl:apply-templates />
     </xsl:template>
 
-    <xsl:template match="segment"            as="map( xs:string, array(function(*))* )" >
+    <xsl:template match="segment"            as="map( xs:string, array(function(*))+ )" >
         <xsl:apply-templates />
     </xsl:template>
 
-    <xsl:template match="child-segment"      as="map( xs:string, array(function(*))* )" >
+    <xsl:template match="child-segment"      as="map( xs:string, array(function(*))+ )" >
         <xsl:map-entry key="'child'" >
             <xsl:apply-templates />
         </xsl:map-entry>
     </xsl:template>
 
-    <xsl:template match="descendant-segment" as="map( xs:string, array(function(*))* )" >
+    <xsl:template match="descendant-segment" as="map( xs:string, array(function(*))+ )" >
         <xsl:map-entry key="'descendant'" >
             <xsl:apply-templates />
         </xsl:map-entry>
@@ -239,7 +239,7 @@
 
     <xsl:template match="filter-query" as="function(item(), item()?, item()?) as map(xs:string, item()?)*" >
 
-        <xsl:variable name="segments" as="map( xs:string, array(function(*))* )*" >
+        <xsl:variable name="segments" as="map( xs:string, array(function(*))+ )*" >
             <!-- segments under either jsonpath-query or rel-query -->
             <xsl:apply-templates select="*/segments" />
         </xsl:variable>
@@ -249,7 +249,7 @@
 
     <xsl:template match="singular-query" as="function(item(), item()?, item()?) as map(xs:string, item()?)*" >
 
-        <xsl:variable name="segments" as="map( xs:string, array(function(*))* )*" >
+        <xsl:variable name="segments" as="map( xs:string, array(function(*))+ )*" >
             <!-- singular-query-segments segments under either rel-singular-query or abs-singular-query -->
             <xsl:apply-templates select="*/singular-query-segments" />
         </xsl:variable>
@@ -257,12 +257,12 @@
         <xsl:sequence select="ajp:applySubSegments(?, ?, ?, $segments, exists(rel-singular-query))" />
     </xsl:template>
 
-    <xsl:template match="singular-query-segments" as="map( xs:string, array(function(*))* )*" >
+    <xsl:template match="singular-query-segments" as="map( xs:string, array(function(*))+ )*" >
         <xsl:apply-templates />
     </xsl:template>
 
     <!-- N.B. Only used under the singular-query-segments -->
-    <xsl:template match="index-segment | name-segment"  as="map( xs:string, array(function(*))* )" >
+    <xsl:template match="index-segment | name-segment"  as="map( xs:string, array(function(*))+ )" >
         <xsl:map-entry key="'child'" >
             <xsl:apply-templates />
         </xsl:map-entry>

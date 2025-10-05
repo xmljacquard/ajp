@@ -83,7 +83,7 @@
         <xsl:param name="item"     as="item()?"                                />
         <xsl:param name="root"     as="item()?"                                />
 
-        <xsl:param name="segments" as="map( xs:string, array(function(*))* )*" />
+        <xsl:param name="segments" as="map( xs:string, array(function(*))+ )*" />
         <xsl:param name="relative" as="xs:boolean"                             />
 
         <xsl:variable name="startNodelist" as="map(xs:string, item()?)*"

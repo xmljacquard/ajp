@@ -13,7 +13,7 @@
         <!-- Nothing to do; have an XSLT environment that allows us to call XPath functions in an XSLT package -->
     </xsl:template>
 
-    <xsl:function name="ajpr:getSegments" as="map( xs:string, array(function(*))* )*" visibility="public">
+    <xsl:function name="ajpr:getSegments" as="map( xs:string, array(function(*))+ )*" visibility="public">
         <xsl:param name="jsonpathQuery"   as="xs:string" />
 
         <xsl:sequence select="ajp:getSegments($jsonpathQuery)" />
@@ -21,7 +21,7 @@
 
     <xsl:function name="ajpr:applySegments" as="map(xs:string, item()?)*"             visibility="public">
         <xsl:param name="root"              as="item()?"                               />
-        <xsl:param name="segments"          as="map(xs:string, array(function(*))* )*" />
+        <xsl:param name="segments"          as="map(xs:string, array(function(*))+ )*" />
 
         <xsl:sequence select="ajp:applySegments($root, $segments)" />
     </xsl:function>

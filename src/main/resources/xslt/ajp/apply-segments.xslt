@@ -13,7 +13,7 @@
     <!-- RFC9535 Section 2.1.2 -->
     <xsl:function name="ajp:applySegments" as="map(xs:string, item()?)*"               >
         <xsl:param name="nodelist"         as="map(xs:string, item()?)*"              />
-        <xsl:param name="segments"         as="map(xs:string, array(function(*))* )*" />
+        <xsl:param name="segments"         as="map(xs:string, array(function(*))+ )*" />
         <xsl:param name="root"             as="item()?"                               />
 
         <xsl:sequence select="if (empty($segments))
@@ -28,7 +28,7 @@
     <!-- RFC9535 Section 2.5.2.2.  Descendant Segments / Semantics -->
     <xsl:function name="ajp:descendants" as="map(xs:string, item()?)*"  >
         <xsl:param name="nodelist"       as="map(xs:string, item()?)*" />
-        <xsl:param name="selectors"      as="array(function(*))*"      />
+        <xsl:param name="selectors"      as="array(function(*))+"      />
         <xsl:param name="root"           as="item()?"                  />
 
         <xsl:sequence select="ajp:children($nodelist, $selectors, $root)" />
@@ -48,7 +48,7 @@
     <!-- RFC9535 Section 2.5.1.2.  Child Segments / Semantics -->
     <xsl:function name="ajp:children" as="map(xs:string, item()?)*"  >
         <xsl:param name="nodelist"    as="map(xs:string, item()?)*" />
-        <xsl:param name="selectors"   as="array( function(*) )*"    />
+        <xsl:param name="selectors"   as="array( function(*) )+"    />
         <xsl:param name="root"        as="item()?"                  />
 
         <xsl:sequence select="for $node        in $nodelist [ ajp:isMapOrArray(.?*) ],

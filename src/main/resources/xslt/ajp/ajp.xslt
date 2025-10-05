@@ -74,7 +74,7 @@
     <xsl:variable name="ajp:parser" select="cs:load-grammar('jsonpath.ixml', map { })" as="function(*)"
                   static="yes"/>
 
-    <xsl:function name="ajp:getSegments"  as="map( xs:string, array(function(*))* )*" >
+    <xsl:function name="ajp:getSegments"  as="map( xs:string, array(function(*))+ )*" >
         <xsl:param name="jsonpathQuery" as="xs:string" />
 
         <xsl:apply-templates select="ajp:getAST($jsonpathQuery)" />
@@ -83,7 +83,7 @@
     <!-- RFC9535 2.1.2.  Semantics -->
     <xsl:function name="ajp:applySegments" as="map(xs:string, item()?)*"               >
         <xsl:param name="root"             as="item()?"                               />
-        <xsl:param name="segments"         as="map(xs:string, array(function(*))* )*" />
+        <xsl:param name="segments"         as="map(xs:string, array(function(*))+ )*" />
 
         <xsl:sequence select="let $startNodelist  := map { '$' : $root },
                                   $returnNodelist := ajp:applySegments($startNodelist, $segments, $root)
