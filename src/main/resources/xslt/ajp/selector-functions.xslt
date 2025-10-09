@@ -88,8 +88,8 @@
 
         <xsl:variable name="startNodelist" as="map(xs:string, item()?)*"
                       select="if ($relative)
-                              then map { '@' : $item($key) }
-                              else map { '$' : $root       }
+                              then map { ajp:path('@', $key) : $item($key) }
+                              else map { '$'                 : $root       }
                              "/>
 
         <xsl:sequence select="ajp:applySegments($startNodelist, $segments, $root)" />

@@ -76,16 +76,16 @@
             </tr>
             <tr>
                <td>ajp</td>
-               <td>17</td>
-               <td>17</td>
+               <td>23</td>
+               <td>23</td>
                <td>0</td>
             </tr>
          </tbody>
          <tfoot class="summary normal-parse-error">
             <tr>
                <td>Total</td>
-               <td>709</td>
-               <td>709</td>
+               <td>715</td>
+               <td>715</td>
                <td>0</td>
             </tr>
          </tfoot>
@@ -7427,6 +7427,72 @@
                   <td class="col-6">null</td>
                   <td class="col-7">[]</td>
                   <td class="col-8">[]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">18</td>
+                  <td class="centered col-1">ajp</td>
+                  <td class="col-2">key_search() test with object root</td>
+                  <td class="centered col-3 passed">✓</td>
+                  <td class="centered col-4 parses">✓</td>
+                  <td class="col-5">$[?key_search(@, \'CH\')]</td>
+                  <td class="col-6">{"CH_id":123,"CH_name":"Channel 1","status":"active"}</td>
+                  <td class="col-7">[123,"Channel 1"]</td>
+                  <td class="col-8">["$['CH_id']","$['CH_name']"]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">19</td>
+                  <td class="centered col-1">ajp</td>
+                  <td class="col-2">key_match() test with object root</td>
+                  <td class="centered col-3 passed">✓</td>
+                  <td class="centered col-4 parses">✓</td>
+                  <td class="col-5">$[?key_match(@, \'CH.*\')]</td>
+                  <td class="col-6">{"CH_id":123,"CH_name":"Channel 1","status":"active"}</td>
+                  <td class="col-7">[123,"Channel 1"]</td>
+                  <td class="col-8">["$['CH_id']","$['CH_name']"]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">20</td>
+                  <td class="centered col-1">ajp</td>
+                  <td class="col-2">key_search() test with object root, no-match</td>
+                  <td class="centered col-3 passed">✓</td>
+                  <td class="centered col-4 parses">✓</td>
+                  <td class="col-5">$[?key_search(@, \'CHX.*\')]</td>
+                  <td class="col-6">{"CH_id":123,"CH_name":"Channel 1","status":"active"}</td>
+                  <td class="col-7">[]</td>
+                  <td class="col-8">[]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">21</td>
+                  <td class="centered col-1">ajp</td>
+                  <td class="col-2">key_match() test with object root, no-match</td>
+                  <td class="centered col-3 passed">✓</td>
+                  <td class="centered col-4 parses">✓</td>
+                  <td class="col-5">$[?key_match(@, \'CHX\')]</td>
+                  <td class="col-6">{"CH_id":123,"CH_name":"Channel 1","status":"active"}</td>
+                  <td class="col-7">[]</td>
+                  <td class="col-8">[]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">22</td>
+                  <td class="centered col-1">ajp</td>
+                  <td class="col-2">key_search() test with array of objects</td>
+                  <td class="centered col-3 passed">✓</td>
+                  <td class="centered col-4 parses">✓</td>
+                  <td class="col-5">$[?key_search(@.*, \'CH\')]</td>
+                  <td class="col-6">[{"CH_name":"Channel 1"},{"CH_id":123},{"status":"active"}]</td>
+                  <td class="col-7">[{"CH_name":"Channel 1"},{"CH_id":123}]</td>
+                  <td class="col-8">["$[0]","$[1]"]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">23</td>
+                  <td class="centered col-1">ajp</td>
+                  <td class="col-2">key_match() test with array of objects</td>
+                  <td class="centered col-3 passed">✓</td>
+                  <td class="centered col-4 parses">✓</td>
+                  <td class="col-5">$[?key_match(@.*, \'CH.*\')]</td>
+                  <td class="col-6">[{"CH_name":"Channel 1"},{"CH_id":123},{"status":"active"}]</td>
+                  <td class="col-7">[{"CH_name":"Channel 1"},{"CH_id":123}]</td>
+                  <td class="col-8">["$[0]","$[1]"]</td>
                </tr>
             </tbody>
          </table>

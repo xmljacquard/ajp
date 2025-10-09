@@ -65,7 +65,7 @@
                              " />
     </xsl:function>
 
-    <!-- N.B. This to allow us to test a function returning a nodelist -->
+    <!-- N.B. This to allow us to test a function accepting and returning a nodelist -->
     <xsl:function name= "ajp:extFuncIdentity" as="map(xs:string, item()?)*" >
         <xsl:param name="nodelist" as="map(xs:string, item()?)*" />
 
@@ -89,18 +89,66 @@
                              " />
     </xsl:function>
 
+    <!-- Functions retrieve values by regex-mapping keys in their parent object / via nodelist -->
+    <xsl:function name= "ajp:extFuncKeyMatch" as="xs:boolean" >
+        <xsl:param name="nodelist" as="map(xs:string, item()?)*" />
+        <xsl:param name="pattern"  as="item()?" />
+
+        <xsl:sequence select="$pattern instance of xs:string
+                               and
+                              (
+                                some $node in $nodelist,
+                                     $path in ajp:key($node),
+                                     $lastKey in ajp:lastSegmentName($path)
+                                satisfies matches($lastKey, '^' || $pattern || '$')
+                              )
+                             " />
+    </xsl:function>
+
+    <!-- RFC9535 Section 2.4.7 -->
+    <xsl:function name= "ajp:extFuncKeySearch" as="xs:boolean" >
+        <xsl:param name="nodelist" as="map(xs:string, item()?)*" />
+        <xsl:param name="pattern"  as="item()?" />
+
+        <xsl:sequence select="$pattern instance of xs:string
+                               and
+                              (
+                                some $node in $nodelist,
+                                     $path in ajp:key($node),
+                                     $lastKey in ajp:lastSegmentName($path)
+                                satisfies matches($lastKey, $pattern)
+                              )
+                             " />
+    </xsl:function>
+
+    <!-- regex for matching the string key (name) within the last segment of the node's location -->
+    <xsl:variable name="lastSegmentNameRegex" as="xs:string" select="'^.*[\[]''([^\[]+)''[\]]$'" />
+
+    <!-- extract the string key from the last segment in the node's location -->
+    <xsl:function name="ajp:lastSegmentName" as="xs:string?" >
+        <xsl:param name="location" as="xs:string" />
+
+        <xsl:sequence select="if (matches($location, $lastSegmentNameRegex))
+                          then replace($location, $lastSegmentNameRegex, '$1')
+                          else ()
+                         " />
+    </xsl:function>
+
     <!--
     Function Extensions
 
-    length   ( ValueType:   string/map/array          ) => ValueType   : integer or Nothing
-    count    ( NodesType:   nodelist                  ) => ValueType   : integer (0 or more)
-    match    ( ValueType:   string, ValueType: string ) => LogicalType : LogicalTrue if regex match
-    search   ( ValueType:   string, ValueType: string ) => LogicalType : LogicalTrue if substring
-    value    ( NodesType:   nodelist                  ) => ValueType   : single node or Nothing
+    length     ( ValueType:   string/map/array            ) => ValueType   : integer or Nothing
+    count      ( NodesType:   nodelist                    ) => ValueType   : integer (0 or more)
+    match      ( ValueType:   string, ValueType: string   ) => LogicalType : LogicalTrue if regex match
+    search     ( ValueType:   string, ValueType: string   ) => LogicalType : LogicalTrue if substring
+    value      ( NodesType:   nodelist                    ) => ValueType   : single node or Nothing
 
-    identity ( NodesType:   nodelist                  ) => NodesType   : returns parameter
-    empty    ( NodesType:   nodelist                  ) => LogicalType : true of count(nodelist) == 0
-    boolstr  ( LogicalType: boolean                   ) => ValueType   : 'true', 'false' or Nothing
+    identity   ( NodesType:   nodelist                    ) => NodesType   : returns parameter
+    empty      ( NodesType:   nodelist                    ) => LogicalType : true of count(nodelist) == 0
+    boolstr    ( LogicalType: boolean                     ) => ValueType   : 'true', 'false' or Nothing
+
+    key-search ( NodesType:   nodelist, ValueType: string ) => LogicalType : last key in nodelist contains pattern
+    key-match  ( NodesType:   nodelist, ValueType: string ) => LogicalType : last key in nodelist matches pattern
     -->
 
     <xsl:function name= "ajp:getExtFunc" as="map(*)" >
@@ -134,15 +182,19 @@
 
     <xsl:variable name="extensionFunctions" as="map(xs:string, map(*))"
                   select="map:merge((
-                            ajp:extFunc('length',   ajp:extFuncLength#1,   $VALUE_TYPE,   [ $VALUE_TYPE              ]),
-                            ajp:extFunc('count',    ajp:extFuncCount#1,    $VALUE_TYPE,   [ $NODES_TYPE              ]),
-                            ajp:extFunc('match',    ajp:extFuncMatch#2,    $LOGICAL_TYPE, [ $VALUE_TYPE, $VALUE_TYPE ]),
-                            ajp:extFunc('search',   ajp:extFuncSearch#2,   $LOGICAL_TYPE, [ $VALUE_TYPE, $VALUE_TYPE ]),
-                            ajp:extFunc('value',    ajp:extFuncValue#1,    $VALUE_TYPE,   [ $NODES_TYPE              ]),
+                          ajp:extFunc('length',   ajp:extFuncLength#1,   $VALUE_TYPE,   [ $VALUE_TYPE              ]),
+                          ajp:extFunc('count',    ajp:extFuncCount#1,    $VALUE_TYPE,   [ $NODES_TYPE              ]),
+                          ajp:extFunc('match',    ajp:extFuncMatch#2,    $LOGICAL_TYPE, [ $VALUE_TYPE, $VALUE_TYPE ]),
+                          ajp:extFunc('search',   ajp:extFuncSearch#2,   $LOGICAL_TYPE, [ $VALUE_TYPE, $VALUE_TYPE ]),
+                          ajp:extFunc('value',    ajp:extFuncValue#1,    $VALUE_TYPE,   [ $NODES_TYPE              ]),
 
-                            ajp:extFunc('identity', ajp:extFuncIdentity#1, $NODES_TYPE,   [ $NODES_TYPE              ]),
-                            ajp:extFunc('empty',    ajp:extFuncEmpty#1,    $LOGICAL_TYPE, [ $NODES_TYPE              ]),
-                            ajp:extFunc('boolstr',  ajp:extFuncBoolStr#1,  $VALUE_TYPE,   [ $LOGICAL_TYPE            ])
+                          ajp:extFunc('identity', ajp:extFuncIdentity#1, $NODES_TYPE,   [ $NODES_TYPE              ]),
+                          ajp:extFunc('empty',    ajp:extFuncEmpty#1,    $LOGICAL_TYPE, [ $NODES_TYPE              ]),
+                          ajp:extFunc('boolstr',  ajp:extFuncBoolStr#1,  $VALUE_TYPE,   [ $LOGICAL_TYPE            ]),
+
+                          ajp:extFunc('key_search',
+                                                  ajp:extFuncKeySearch#2,$LOGICAL_TYPE, [ $NODES_TYPE, $VALUE_TYPE ]),
+                          ajp:extFunc('key_match',ajp:extFuncKeyMatch#2, $LOGICAL_TYPE, [ $NODES_TYPE, $VALUE_TYPE ])
                           ))" />
 
     <xsl:function name="ajp:extFunc" as="map(xs:string, map(*))" >

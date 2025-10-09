@@ -228,7 +228,7 @@
 
         <xsl:for-each select="map:keys($tests)" >
 
-            <xsl:variable name="origin" as="xs:string" select="."               />
+            <xsl:variable name="origin" as="xs:string" select="." />
 
             <xsl:for-each select="$tests($origin)?tests?*" >
 
@@ -285,9 +285,16 @@
         <xsl:param name="getSegmentsMap" as="map(*)"                   />
         <xsl:param name="output"         as="map(xs:string, item()?)*" />
 
-        <xsl:sequence select="($test?invalid_selector and map:contains($getSegmentsMap, 'error'))
-                               or
-                              tests:compareValues($test, $output) and tests:comparePaths($test, $output)
+        <xsl:sequence select="if (map:contains($getSegmentsMap, 'error'))
+                              then (map:contains($test, 'invalid_selector')
+                                     and
+                                    $test?invalid_selector
+                              )
+                              else (
+                                  tests:compareValues($test, $output)
+                                   and
+                                  tests:comparePaths($test, $output)
+                              )
                              " />
     </xsl:function>
 
@@ -312,7 +319,7 @@
         <xsl:param name="output" as="map(xs:string, item()?)*" />
 
         <xsl:sequence select="let $paths := ajp:arrayOfPaths($output)
-                              return if (map:contains($test, 'invalid_selector'))
+                              return if (map:contains($test, 'invalid_selector') and $test?invalid_selector)
                                      then false()
                                      else if (map:contains($test, 'result_paths'))
                                      then deep-equal($test?result_paths, $paths)

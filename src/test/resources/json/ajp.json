@@ -251,6 +251,114 @@
         "filter",
         "match"
       ]
+    },
+    {
+      "name": "key_search() test with object root",
+      "selector": "$[?key_search(@, 'CH')]",
+      "document": {
+        "CH_name" : "Channel 1",
+        "CH_id"   : 123,
+        "status"  : "active"
+      },
+      "results": [
+        [ 123         , "Channel 1" ],
+        [ "Channel 1" , 123         ]
+      ],
+      "results_paths": [
+        [ "$['CH_id']"   , "$['CH_name']" ],
+        [ "$['CH_name']" , "$['CH_id']"   ]
+      ],
+      "tags": [
+        "filter",
+        "key_search"
+      ]
+    },
+    {
+      "name": "key_match() test with object root",
+      "selector": "$[?key_match(@, 'CH.*')]",
+      "document": {
+        "CH_name" : "Channel 1",
+        "CH_id"   : 123,
+        "status"  : "active"
+      },
+      "results": [
+        [ 123         , "Channel 1" ],
+        [ "Channel 1" , 123         ]
+      ],
+      "results_paths": [
+        [ "$['CH_id']"   , "$['CH_name']" ],
+        [ "$['CH_name']" , "$['CH_id']"   ]
+      ],
+      "tags": [
+        "filter",
+        "key_match"
+      ]
+    },
+    {
+      "name": "key_search() test with object root, no-match",
+      "selector": "$[?key_search(@, 'CHX.*')]",
+      "document": {
+        "CH_name" : "Channel 1",
+        "CH_id"   : 123,
+        "status"  : "active"
+      },
+      "result": [ ],
+      "result_paths": [ ],
+      "tags": [
+        "filter",
+        "key_search"
+      ]
+    },
+    {
+      "name": "key_match() test with object root, no-match",
+      "selector": "$[?key_match(@, 'CHX')]",
+      "document": {
+        "CH_name" : "Channel 1",
+        "CH_id"   : 123,
+        "status"  : "active"
+      },
+      "result": [ ],
+      "result_paths": [ ],
+      "tags": [
+        "filter",
+        "key_match"
+      ]
+    },
+    {
+      "name": "key_search() test with array of objects",
+      "selector": "$[?key_search(@.*, 'CH')]",
+      "document": [
+        { "CH_name" : "Channel 1" },
+        { "CH_id"   : 123         },
+        { "status"  : "active"    }
+      ],
+      "result": [
+        { "CH_name" : "Channel 1" },
+        { "CH_id"   : 123         }
+      ],
+      "result_paths": [ "$[0]" , "$[1]" ],
+      "tags": [
+        "filter",
+        "key_search"
+      ]
+    },
+    {
+      "name": "key_match() test with array of objects",
+      "selector": "$[?key_match(@.*, 'CH.*')]",
+      "document": [
+        { "CH_name" : "Channel 1" },
+        { "CH_id"   : 123         },
+        { "status"  : "active"    }
+      ],
+      "result": [
+        { "CH_name" : "Channel 1" },
+        { "CH_id"   : 123         }
+      ],
+      "result_paths": [ "$[0]" , "$[1]" ],
+      "tags": [
+        "filter",
+        "key_search"
+      ]
     }
   ]
 }
