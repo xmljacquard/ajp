@@ -137,18 +137,18 @@
     <!--
     Function Extensions
 
-    length     ( ValueType:   string/map/array            ) => ValueType   : integer or Nothing
-    count      ( NodesType:   nodelist                    ) => ValueType   : integer (0 or more)
-    match      ( ValueType:   string, ValueType: string   ) => LogicalType : LogicalTrue if regex match
-    search     ( ValueType:   string, ValueType: string   ) => LogicalType : LogicalTrue if substring
-    value      ( NodesType:   nodelist                    ) => ValueType   : single node or Nothing
+    length     ( ValueType:   string/map/array           ) => ValueType   : integer or Nothing
+    count      ( NodesType:   nodelist                   ) => ValueType   : integer (0 or more)
+    match      ( ValueType:   string, ValueType: string  ) => LogicalType : LogicalTrue if regex match
+    search     ( ValueType:   string, ValueType: string  ) => LogicalType : LogicalTrue if substring
+    value      ( NodesType:   nodelist                   ) => ValueType   : single node or Nothing
 
-    identity   ( NodesType:   nodelist                    ) => NodesType   : returns parameter
-    empty      ( NodesType:   nodelist                    ) => LogicalType : true of count(nodelist) == 0
-    boolstr    ( LogicalType: boolean                     ) => ValueType   : 'true', 'false' or Nothing
+    identity   ( NodesType:   nodelist                   ) => NodesType   : returns parameter
+    empty      ( NodesType:   nodelist                   ) => LogicalType : true of count(nodelist) == 0
+    boolstr    ( LogicalType: boolean                    ) => ValueType   : 'true', 'false' or Nothing
 
-    key-search ( NodesType:   nodelist, ValueType: string ) => LogicalType : last key in nodelist contains pattern
-    key-match  ( NodesType:   nodelist, ValueType: string ) => LogicalType : last key in nodelist matches pattern
+    key-search ( NodesType:  nodelist, ValueType: string ) => LogicalType : last key in nodelist contains pattern
+    key-match  ( NodesType:  nodelist, ValueType: string ) => LogicalType : last key in nodelist matches pattern
     -->
 
     <xsl:function name= "ajp:getExtFunc" as="map(*)" >
