@@ -17,9 +17,9 @@
     </xsl:function>
 
     <xsl:function name="ajp:wildcardSelectorTest" as="xs:boolean" >
-        <xsl:param name="key"    as="item()"   />
-        <xsl:param name="item"   as="item()?"  />
-        <xsl:param name="root"   as="item()?"  />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:sequence select="true()" />
     </xsl:function>
@@ -79,76 +79,76 @@
 
     <!-- Process the segments contained by a sub-query within a filter selector -->
     <xsl:function name="ajp:applySubSegments" as="map(xs:string, item()?)*" >
-        <xsl:param name="key"      as="item()"                                 />
-        <xsl:param name="item"     as="item()?"                                />
-        <xsl:param name="root"     as="item()?"                                />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:param name="segments" as="map( xs:string, array(function(*))+ )*" />
         <xsl:param name="relative" as="xs:boolean"                             />
 
         <xsl:variable name="startNodelist" as="map(xs:string, item()?)*"
                       select="if ($relative)
-                              then map { ajp:path('@', $key) : $item($key) }
-                              else map { '$'                 : $root       }
+                              then map { $childPath : $childValue }
+                              else map { '$'        : $root       }
                              "/>
 
         <xsl:sequence select="ajp:applySegments($startNodelist, $segments, $root)" />
     </xsl:function>
 
     <xsl:function name="ajp:logicalOrExpr" as="xs:boolean" >
-        <xsl:param name="key"      as="item()"                                              />
-        <xsl:param name="item"     as="item()?"                                             />
-        <xsl:param name="root"     as="item()?"                                             />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:param name="operands" as="(function(item(), item()?, item()?) as xs:boolean)*" />
 
         <xsl:sequence select="some $operand in $operands
-                              satisfies $operand($key, $item, $root)" />
+                              satisfies $operand($childPath, $childValue, $root)" />
     </xsl:function>
 
     <xsl:function name="ajp:logicalAndExpr" as="xs:boolean" >
-        <xsl:param name="key"      as="item()"                                              />
-        <xsl:param name="item"     as="item()?"                                             />
-        <xsl:param name="root"     as="item()?"                                             />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:param name="operands" as="(function(item(), item()?, item()?) as xs:boolean)*" />
 
         <xsl:sequence select="every $operand in $operands
-                              satisfies $operand($key, $item, $root)" />
+                              satisfies $operand($childPath, $childValue, $root)" />
     </xsl:function>
 
     <xsl:function name="ajp:logicalNotExpr" as="xs:boolean" >
-        <xsl:param name="key"      as="item()"                                           />
-        <xsl:param name="item"     as="item()?"                                          />
-        <xsl:param name="root"     as="item()?"                                          />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:param name="operand"  as="function(item(), item()?, item()?) as xs:boolean" />
 
-        <xsl:sequence select="not($operand($key, $item, $root))" />
+        <xsl:sequence select="not($operand($childPath, $childValue, $root))" />
     </xsl:function>
 
     <xsl:function name="ajp:nodesToLogical" as="xs:boolean" >
-        <xsl:param name="key"      as="item()"                                                         />
-        <xsl:param name="item"     as="item()?"                                                        />
-        <xsl:param name="root"     as="item()?"                                                        />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:param name="operand"  as="function(item(), item()?, item()?) as map(xs:string, item()?)*" />
 
-        <xsl:sequence select="count($operand($key, $item, $root)) gt 0" />
+        <xsl:sequence select="count($operand($childPath, $childValue, $root)) gt 0" />
     </xsl:function>
 
     <!-- RFC9535 Section 2.3.5.2.2.  Comparisons -->
     <xsl:function name="ajp:comparisonExpr" as="xs:boolean" >
-        <xsl:param name="key"       as="item()"                                        />
-        <xsl:param name="item"      as="item()?"                                       />
-        <xsl:param name="root"      as="item()?"                                       />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:param name="operand1F" as="function(item(), item()?, item()?) as item()?" />
         <xsl:param name="operator"  as="xs:string"                                     />
         <xsl:param name="operand2F" as="function(item(), item()?, item()?) as item()?" />
 
-        <xsl:variable name="operandA" as="item()?" select="$operand1F($key, $item, $root)" />
-        <xsl:variable name="operandB" as="item()?" select="$operand2F($key, $item, $root)" />
+        <xsl:variable name="operandA" as="item()?" select="$operand1F($childPath, $childValue, $root)" />
+        <xsl:variable name="operandB" as="item()?" select="$operand2F($childPath, $childValue, $root)" />
 
         <xsl:variable name="equal"      as="xs:boolean" select="ajp:comparisonEqual   ($operandA, $operandB)" />
         <xsl:variable name="aLessThanB" as="xs:boolean" select="ajp:comparisonLessThan($operandA, $operandB)" />
@@ -238,14 +238,14 @@
 
     <!-- RFC9535 Section 2.4.3.  Well-Typedness of Function Expressions  Point 2 (singular query) -->
     <xsl:function name="ajp:singularQuery" as="item()" >
-        <xsl:param name="key"   as="item()"                                                         />
-        <xsl:param name="item"  as="item()?"                                                        />
-        <xsl:param name="root"  as="item()?"                                                        />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:param name="query" as="function(item(), item()?, item()?) as map(xs:string, item()?)*" />
 
         <xsl:variable name="nodelist" as="map(xs:string, item()?)*"
-                      select="$query($key, $item, $root)" />
+                      select="$query($childPath, $childValue, $root)" />
 
         <xsl:sequence select="if (count($nodelist) eq 0)
                               then $NOTHING
@@ -258,9 +258,9 @@
     </xsl:function>
 
     <xsl:function name="ajp:functionExpr" as="item()*">
-        <xsl:param name="key"             as="item()"                                           />
-        <xsl:param name="item"            as="item()?"                                          />
-        <xsl:param name="root"            as="item()?"                                          />
+        <xsl:param name="childPath"  as="xs:string" />
+        <xsl:param name="childValue" as="item()?"   />
+        <xsl:param name="root"       as="item()?"   />
 
         <xsl:param name="functionName"    as="xs:string"                                        />
         <xsl:param name="arguments"       as="(function(item(), item()?, item()?) as item()*)*" />
@@ -274,16 +274,16 @@
                 <xsl:sequence select="$function?function()" />
             </xsl:when>
             <xsl:when test="$numberOfArgs eq 1" >
-                <xsl:sequence select="$function?function($arguments[1]($key, $item, $root))" />
+                <xsl:sequence select="$function?function($arguments[1]($childPath, $childValue, $root))" />
             </xsl:when>
             <xsl:when test="$numberOfArgs eq 2" >
-                <xsl:sequence select="$function?function($arguments[1]($key, $item, $root),
-                                                         $arguments[2]($key, $item, $root))" />
+                <xsl:sequence select="$function?function($arguments[1]($childPath, $childValue, $root),
+                                                         $arguments[2]($childPath, $childValue, $root))" />
             </xsl:when>
             <xsl:when test="$numberOfArgs eq 3" >
-                <xsl:sequence select="$function?function($arguments[1]($key, $item, $root),
-                                                         $arguments[2]($key, $item, $root),
-                                                         $arguments[3]($key, $item, $root))" />
+                <xsl:sequence select="$function?function($arguments[1]($childPath, $childValue, $root),
+                                                         $arguments[2]($childPath, $childValue, $root),
+                                                         $arguments[3]($childPath, $childValue, $root))" />
             </xsl:when>
             <xsl:otherwise>
                 <xsl:sequence select="ajp:error('INT', 5, 'bad number of arguments for function ' ||

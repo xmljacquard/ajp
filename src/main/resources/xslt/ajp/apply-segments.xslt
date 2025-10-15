@@ -56,10 +56,11 @@
                                   $parentValue in $node?*,
                                   $selector    in $selectors,
                                   $key         in $selector(1)($parentValue),
-                                  $path        in ajp:path($parentPath, $key)
-                              return map {
-                                              $path : ( $parentValue($key), $NULL )[1]
-                                         } [ $selector(2)($key, $parentValue, $root) ]
+                                  $childPath   in ajp:path($parentPath, $key)
+                              return let $childValue := $parentValue($key)
+                                     return map {
+                                                $childPath : ( $childValue, $NULL )[1]
+                                            } [ $selector(2)($childPath, $childValue, $root) ]
                              " />
     </xsl:function>
 
