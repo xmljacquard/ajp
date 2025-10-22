@@ -304,9 +304,7 @@
         <xsl:param name="output" as="map(xs:string, item()?)*" />
 
         <xsl:sequence select="let $values := ajp:arrayOfValues($output)
-                              return if (map:contains($test, 'invalid_selector'))
-                                     then false()
-                                     else if (map:contains($test, 'result'))
+                              return if (map:contains($test, 'result'))
                                      then deep-equal($test?result, $values)
                                      else
                                         some $altTestResult in $test?results?*
@@ -319,9 +317,7 @@
         <xsl:param name="output" as="map(xs:string, item()?)*" />
 
         <xsl:sequence select="let $paths := ajp:arrayOfPaths($output)
-                              return if (map:contains($test, 'invalid_selector') and $test?invalid_selector)
-                                     then false()
-                                     else if (map:contains($test, 'result_paths'))
+                              return if (map:contains($test, 'result_paths'))
                                      then deep-equal($test?result_paths, $paths)
                                      else
                                         some $altTestPaths in $test?results_paths?*
