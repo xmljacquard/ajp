@@ -288,8 +288,11 @@
         <xsl:sequence select="if (map:contains($getSegmentsMap, 'error'))
                               then (map:contains($test, 'invalid_selector')
                                      and
-                                    $test?invalid_selector
-                              )
+                                    $test?invalid_selector)
+                              else if (map:contains($test, 'invalid_selector')
+                                       and
+                                       $test?invalid_selector)
+                              then false()
                               else (
                                   tests:compareValues($test, $output)
                                    and
