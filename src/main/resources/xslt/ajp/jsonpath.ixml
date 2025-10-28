@@ -109,7 +109,7 @@ step                    = int .      { default: 1                }
 
 filter-selector         = - "?" , S , logical-expr .
 
-logical-expr            = logical-or-expr        .
+logical-expr            = logical-or-expr          .
 
 logical-or-expr         = logical-and-expr , ( S , - "||" , S , logical-and-expr )* .
                                      { disjunction                         }
