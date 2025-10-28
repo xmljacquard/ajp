@@ -24,7 +24,7 @@
         <xsl:sequence select="true()" />
     </xsl:function>
 
-    <xsl:function name="ajp:nameSelectorKeys" as="item()*" >
+    <xsl:function name="ajp:nameSelectorKeys" as="item()?" >
         <xsl:param name="item"  as="item()?"   />
 
         <xsl:param name="match" as="xs:string" />
@@ -36,7 +36,7 @@
                               else ()" />
     </xsl:function>
 
-    <xsl:function name="ajp:indexSelectorKeys" as="item()*" >
+    <xsl:function name="ajp:indexSelectorKeys" as="item()?" >
         <xsl:param name="item"  as="item()?"    />
 
         <xsl:param name="match" as="xs:integer" />
