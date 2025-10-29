@@ -333,16 +333,16 @@
             <xsl:apply-templates select="filter-query"/>
         </xsl:variable>
 
-        <xsl:sequence select="if      ( $argumentType is $LOGICAL_TYPE )
+        <xsl:sequence select="if      ( $argumentType is $NODES_TYPE )
+                              then                             $query
+                              else if ( $argumentType is $LOGICAL_TYPE )
                               then ajp:nodesToLogical(?, ?, ?, $query)
                               else if ( $argumentType is $VALUE_TYPE and ajp:isSingularQuery(filter-query) )
                               then ajp:singularQuery (?, ?, ?, $query)
-                              else if ( $argumentType is $VALUE_TYPE )
-                              then ajp:error('FCT', 8, 'argument ' || position() ||
+                              else    (: $argumentType is $VALUE_TYPE not singular :)
+                                   ajp:error('FCT', 8, 'argument '     || position()    ||
                                                        ' of function ' || $functionName || '()' ||
                                                        ' must be a singular query.')
-                              else    (: argumentType is $NODES_TYPE :)
-                                                             $query
                              " />
     </xsl:template>
 
@@ -360,10 +360,10 @@
                               else if ( $argumentType is NODES_TYPE)
                               then ajp:nodesToLogical(?, ?, ?, $logicalExpr)
                               else if ( $argumentType is $VALUE_TYPE )
-                              then ajp:error('FCT', 9, 'argument '     || position() ||
+                              then ajp:error('FCT', 9, 'argument '     || position()    ||
                                                        ' of function ' || $functionName || '()' ||
                                                        ' requires a singular query argument')
-                              else ajp:error('INT', 3, 'argument '         || position() ||
+                              else ajp:error('INT', 3, 'argument '         || position()    ||
                                                        ' of function '     || $functionName || '()' ||
                                                        ' is unknown type ' || $argumentType)
                              " />
