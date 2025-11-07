@@ -9,6 +9,12 @@ of the node and the map's value is the associated JSON value at that location.
 
 The `nodelist` is hence the XDM sequence of singleton maps, or `node`s. 
 
+## Declarative Amsterdam Presentation Document ##
+
+A companion document intended for the Declarative Amsterdam 2025 proceedings is available here (PDF): 
+[ajp-decl-amst-proceedings.pdf](https://xmljacquard.github.io/ajp/doc/ajp-decl-amst-proceedings.pdf).
+
+
 ## Warning on Submodules ##
 
 Because this repo includes two submodules in order to recover the compliance test suite
