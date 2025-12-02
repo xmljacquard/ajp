@@ -234,10 +234,10 @@
 
                 <xsl:variable name="test" as="map(*)" select="." />
 
-                <xsl:variable name="getSegmentsMap" as="map(*)" >
+                <xsl:variable name="processorMap" as="map(*)" >
                     <xsl:map>
                         <xsl:try>
-                            <xsl:map-entry key="'segments'" select="ajp:getSegments($test?selector)" />
+                            <xsl:map-entry key="'processor'" select="ajp:getProcessor($test?selector)" />
                             <xsl:catch>
                                 <xsl:map-entry key="'error'"
                                                select="ajp:errorSummary($err:code, $err:description)" />
@@ -247,8 +247,8 @@
                 </xsl:variable>
 
                 <xsl:variable name="output" as="map(xs:string, item()?)*"
-                              select="if (map:contains($getSegmentsMap, 'segments'))
-                                      then ajp:applySegments($test?document, $getSegmentsMap?segments)
+                              select="if (map:contains($processorMap, 'processor'))
+                                      then $processorMap?processor($test?document)
                                       else ()
                                      " />
 
@@ -256,7 +256,7 @@
                         <number>{       position()                                          }</number>
                         <origin>{       $origin                                             }</origin>
                         <name>{         $test?name                                          }</name>
-                        <passed>{       tests:passed($test, $getSegmentsMap, $output)       }</passed>
+                        <passed>{       tests:passed($test, $processorMap, $output)         }</passed>
                         <parsable>{     map:get($test, 'invalid_selector') => boolean()
                                                                            => not()         }</parsable>
                         <query>{        $test?selector
@@ -265,14 +265,14 @@
                         <queryArg>{     tests:prettyPrintJson( $test?document )
                                               => ajp:replaceHigherPlaneChars()
                                               => ajp:escape()                               }</queryArg>
-                    <xsl:if test="map:contains($getSegmentsMap, 'segments')" >
+                    <xsl:if test="map:contains($processorMap, 'processor')" >
                         <outputValues>{ tests:prettyPrintJson( ajp:arrayOfValues($output) )
                                               => ajp:replaceHigherPlaneChars()
                                               => ajp:escape()                               }</outputValues>
                         <outputPaths>{  tests:prettyPrintJson( ajp:arrayOfPaths ($output) ) }</outputPaths>
                     </xsl:if>
-                    <xsl:if test="map:contains($getSegmentsMap, 'error')" >
-                        <parseError>{   $getSegmentsMap?error                               }</parseError>
+                    <xsl:if test="map:contains($processorMap, 'error')" >
+                        <parseError>{   $processorMap?error                                 }</parseError>
                     </xsl:if>
                 </result>
             </xsl:for-each>
@@ -280,12 +280,13 @@
 
     </xsl:function>
 
+    <!-- Complicated logic because must check that processor produces an error only in case of invalid_selector -->
     <xsl:function name="tests:passed" as="xs:boolean" >
-        <xsl:param name="test"           as="map(*)"                   />
-        <xsl:param name="getSegmentsMap" as="map(*)"                   />
-        <xsl:param name="output"         as="map(xs:string, item()?)*" />
+        <xsl:param name="test"         as="map(*)"                   />
+        <xsl:param name="processorMap" as="map(*)"                   />
+        <xsl:param name="output"       as="map(xs:string, item()?)*" />
 
-        <xsl:sequence select="if (map:contains($getSegmentsMap, 'error'))
+        <xsl:sequence select="if (map:contains($processorMap, 'error'))
                               then (map:contains($test, 'invalid_selector')
                                      and
                                     $test?invalid_selector)
@@ -300,7 +301,6 @@
                               )
                              " />
     </xsl:function>
-
 
     <xsl:function name="tests:compareValues" as="xs:boolean" >
         <xsl:param name="test"   as="map(*)"                   />

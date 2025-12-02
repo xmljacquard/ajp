@@ -17,8 +17,8 @@ public class AjpRunner {
 
     public static final String AJPR_NAMESPACE   = "http://xmljacquard.org/ajp/runner";
 
-    public static final QName  GET_SEGMENTS     = new QName(AJPR_NAMESPACE, "getSegments"  );
-    public static final QName  APPLY_SEGMENTS   = new QName(AJPR_NAMESPACE, "applySegments");
+    public static final QName  GET_PROCESSOR    = new QName(AJPR_NAMESPACE, "getProcessor" );
+    public static final QName  RUN_PROCESSOR    = new QName(AJPR_NAMESPACE, "runProcessor" );
     public static final QName  ERROR_SUMMARY    = new QName(AJPR_NAMESPACE, "errorSummary" );
     public static final QName  ARRAY_OF_VALUES  = new QName(AJPR_NAMESPACE, "arrayOfValues");
     public static final QName  ARRAY_OF_PATHS   = new QName(AJPR_NAMESPACE, "arrayOfPaths" );
@@ -33,9 +33,7 @@ public class AjpRunner {
             throw new IllegalStateException("query already compiled for this instance.");
         }
 
-        final Xslt30Transformer xslt30Transformer = xsltExecutable.load30();
-
-        compiledQuery = xslt30Transformer.callFunction(GET_SEGMENTS, new XdmValue[] { makeValue(jsonpathQuery) } );
+        compiledQuery = getJsonpathProcessor(xsltExecutable.load30(), new XdmValue[] { makeValue(jsonpathQuery) } );
 
         return this;
     }
@@ -51,7 +49,7 @@ public class AjpRunner {
         if (compiledQuery == null) {
             throw new IllegalStateException("must call withQuery() to compile the query before retrieving values");
         }
-        return xsltExecutable.load30().callFunction(APPLY_SEGMENTS, new XdmValue[] { jsonValue, compiledQuery } );
+        return xsltExecutable.load30().callFunction(RUN_PROCESSOR, new XdmValue[] { jsonValue, compiledQuery } );
     }
 
     public String getErrorSummary(final SaxonApiException e) throws SaxonApiException {
@@ -94,6 +92,11 @@ public class AjpRunner {
     @SuppressWarnings("DataFlowIssue")
     private static StreamSource getRunnerSource() throws URISyntaxException {
         return new StreamSource(THIS.getResource("/xslt/ajp-runner.xslt").toURI().toString());
+    }
+
+    private static XdmValue getJsonpathProcessor(final Xslt30Transformer xslt30Transformer,
+                                                        final XdmValue[]        parameters) throws SaxonApiException {
+        return xslt30Transformer.callFunction(GET_PROCESSOR, parameters);
     }
 
     private static final String XPATH_FUNCTIONS_NS       = "http://www.w3.org/2005/xpath-functions";

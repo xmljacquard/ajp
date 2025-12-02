@@ -91,35 +91,30 @@ respective test stylesheets from java.
 
 #### Available `ajp` XPath Functions ####
 
-- `function ajp:getSegments($jsonpathQuery as xs:string) as map( xs:string, array(function(*))* )*` 
+- `function ajp:getProcessor($jsonpathQuery as xs:string) as map( xs:string, array(function(*))* )*` 
 
-`ajp:getSegments()` takes a JSONPATH query string argument and returns a sequence of "segments" that 
-correspond to the query. The "segments" are compiled from the Abstract Syntax Tree (AST) returned 
-by `ixml` (Invisible XML).
+`ajp:getProcessor()` takes a JSONPATH query string argument and returns a function that runs
+the compiled JSONPATH query on the JSON data presented as its only argument. 
 
-- `function ajp:applySegments($root as item()?, $segments as map( xs:string, array(function(*))* )*) as map(xs:string, item()?)* `
-
-This function takes the segments returned by `ajp:getSegments()` and the query argument json value and 
-returns the `nodelist` that corresponds to the processing of the query on the query argument.
-
-Those are the two functions necessary for jsonpath processing.  Some other functions are available.
+**N.B.** *This function encapsulates the `segments` structure returned by the now-internal `ajp:getSegments()` function.*
 
 - `function ajp:getAST($jsonpathQuery as xs:string) as document-node(element(jsonpath-query))`
 
 It's possible to retrieve the XML version of the AST via the function `ajp:getAST()`.
 The AST is returned as a document node with root element `jsonpath-query`.
-This can be useful for debugging but is not required for processing as `ajp:getSegments()` performs this.
+This can be useful for debugging but is not required for processing as `ajp:getProcessor()` performs this.
 
 - `functiopn ajp:arrayOfValues($nodelist as map(xs:string, item()?)*) as array(item()?)`
 - `functiopn ajp:arrayOfPaths($nodelist as map(xs:string, item()?)*) as array(xs:string)`
 - `functiopn ajp:arrayOfNodes($nodelist as map(xs:string, item()?)*) as array(map(xs:string, item()?))`
 
-These three functions take the output `nodelist` from `ajp:applySegments` and return an array of either 
+These three functions take the output `nodelist` created by the return from the function returned by `ajp:getProcessor()`
+and return respectively an array of either 
 the "values", "locations" or the singleton `node` maps from the nodes in the `nodelist`.
 
 - `function ajp:errorSummary($error_code as xs:QName, $error_description as xs:string) as xs:string`
 
-In case of a query grammar error, the XSLT environment will throw an exception that can be caught in in an
+In case of a query grammar error, the XSLT environment will raise an xpath error that can be caught by an
 `<xsl:catch>` statement. `ajp:errorSummary()` takes as arguments the values `$err:code` and `$err:description` 
 available within the `<xsl:catch>` element and produces a string error message.
 

@@ -227,10 +227,10 @@
             <xsl:variable name="queryArg"    as="item()"    select="resolve-uri('document.json', $selectorUri)
                                                                                => json-doc()" />
 
-            <xsl:variable name="getSegmentsMap" as="map(*)" >
+            <xsl:variable name="processorMap" as="map(*)" >
                 <xsl:map>
                     <xsl:try>
-                        <xsl:map-entry key="'segments'" select="ajp:getSegments($query)" />
+                        <xsl:map-entry key="'processor'" select="ajp:getProcessor($query)" />
                         <xsl:catch>
                             <xsl:map-entry key="'error'"
                                            select="ajp:errorSummary($err:code, $err:description)" />
@@ -240,29 +240,29 @@
             </xsl:variable>
 
             <xsl:variable name="output" as="map(xs:string, item()?)*"
-                          select="if (map:contains($getSegmentsMap, 'segments'))
-                                  then ajp:applySegments($queryArg, $getSegmentsMap?segments)
+                          select="if (map:contains($processorMap, 'processor'))
+                                  then $processorMap?processor($queryArg)
                                   else ()
                                  " />
 
             <result>
                     <number>{       position()                                          }</number>
                     <name>{         $testName                                           }</name>
-                    <parsed>{       map:contains($getSegmentsMap, 'segments')           }</parsed>
+                    <parsed>{       map:contains($processorMap, 'processor')            }</parsed>
                     <query>{        $query
                                           => ajp:replaceHigherPlaneChars()
                                           => ajp:escape()                               }</query>
                     <queryArg>{     tests:prettyPrintJson( $queryArg )
                                           => ajp:replaceHigherPlaneChars()
                                           => ajp:escape()                               }</queryArg>
-                <xsl:if test="map:contains($getSegmentsMap, 'segments')" >
+                <xsl:if test="map:contains($processorMap, 'processor')" >
                     <outputValues>{ tests:prettyPrintJson( ajp:arrayOfValues($output) )
                                           => ajp:replaceHigherPlaneChars()
                                           => ajp:escape()                               }</outputValues>
                     <outputPaths>{  tests:prettyPrintJson( ajp:arrayOfPaths ($output) ) }</outputPaths>
                 </xsl:if>
-                <xsl:if test="map:contains($getSegmentsMap, 'error')" >
-                    <parseError>{   $getSegmentsMap?error                               }</parseError>
+                <xsl:if test="map:contains($processorMap, 'error')" >
+                    <parseError>{   $processorMap?error                                 }</parseError>
                 </xsl:if>
             </result>
         </xsl:for-each>

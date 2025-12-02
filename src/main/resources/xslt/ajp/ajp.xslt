@@ -37,9 +37,8 @@
 
     <xsl:expose component="*"        names="*"                             visibility="private" />
 
-    <!-- The following two functions are the only two that are required for JSONPATH processing -->
-    <xsl:expose component="function" names="ajp:getSegments#1"             visibility="public"  />
-    <xsl:expose component="function" names="ajp:applySegments#2"           visibility="public"  />
+    <!-- Create the function for processing the jsonpath query string provided as an argument  -->
+    <xsl:expose component="function" names="ajp:getProcessor#1"            visibility="public"  />
 
     <!-- This function allow retrieving the abstract syntax tree of the query                  -->
     <xsl:expose component="function" names="ajp:getAST#1"                  visibility="public"  />
@@ -74,7 +73,7 @@
     <xsl:variable name="ajp:parser" select="cs:load-grammar('jsonpath.ixml', map { })" as="function(*)"
                   static="yes"/>
 
-    <xsl:function name="ajp:getSegments"  as="map( xs:string, array(function(*))+ )*" >
+    <xsl:function name="ajp:getSegments" as="map( xs:string, array(function(*))+ )*" >
         <xsl:param name="jsonpathQuery" as="xs:string" />
 
         <xsl:apply-templates select="ajp:getAST($jsonpathQuery)" />
@@ -90,7 +89,13 @@
                               return ajp:convertNulls($returnNodelist)" />
     </xsl:function>
 
-    <!-- Produces the XML-version AST, the same as used by l:getSegments().  For debugging or reporting -->
+    <xsl:function name="ajp:getProcessor" as="function(item()?) as map(xs:string, item()?)*" >
+        <xsl:param name="jsonpathQuery" as="xs:string" />
+
+        <xsl:sequence select="ajp:applySegments(?, ajp:getSegments($jsonpathQuery))" />
+    </xsl:function>
+
+    <!-- Produces the XML-version AST, the same as used by ajp:getSegments().  For debugging or reporting -->
     <xsl:function name="ajp:getAST"     as="document-node()" >
         <xsl:param name="jsonpathQuery" as="xs:string" />
 
