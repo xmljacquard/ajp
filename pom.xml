@@ -6,7 +6,7 @@
 
     <groupId>org.xmljacquard</groupId>
     <artifactId>ajp</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
 
     <name>ajp -- A JSONPATH Processor</name>
     <description>An XSLT package that implements RFC9535 using ixml (Invisible Xml)</description>
@@ -49,7 +49,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <nineml_version>3.2.9</nineml_version>
+        <nineml_version>3.3.3</nineml_version>
     </properties>
 
     <build>
@@ -107,16 +107,29 @@
     </build>
 
     <dependencies>
+        <!-- N.B. Temporary exclusions of Saxon-EE due to regression in dependencies in version 3.3.3 -->
         <dependency>
             <groupId>org.nineml</groupId>
             <artifactId>coffeepot</artifactId>
             <version>${nineml_version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.saxonica</groupId>
+                    <artifactId>Saxon-EE</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.nineml</groupId>
             <artifactId>coffeesacks</artifactId>
             <version>${nineml_version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.saxonica</groupId>
+                    <artifactId>Saxon-EE</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

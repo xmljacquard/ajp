@@ -104,7 +104,7 @@
 
     <!-- Calls the nineml ixml processor with the grammar and produces a report on ambiguities, etc -->
     <xsl:function name="ajp:hygieneReport" as="item()" >
-        <xsl:sequence select="cs:hygiene-report('jsonpath.ixml')" />
+        <xsl:sequence select="cs:hygiene-report(resolve-uri('jsonpath.ixml'))" />
     </xsl:function>
 
     <!-- Replace any top-level $NULL values in the nodelist with empty sequence () -->
