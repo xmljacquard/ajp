@@ -70,8 +70,8 @@
     <xsl:variable name="ajp:NAMESPACE" as="xs:anyURI" select="namespace-uri($namespace_element)" />
 
     <!-- The parser is instantiated at the time of the stylesheet compilation, thanks to "static" -->
-    <xsl:variable name="ajp:parser" select="cs:load-grammar('jsonpath.ixml', map { })" as="function(*)"
-                  static="yes"/>
+    <xsl:variable name="ajp:parser" select="cs:load-grammar(resolve-uri('jsonpath.ixml'), map { })"
+                  as="function(*)" static="yes"/>
 
     <xsl:function name="ajp:getSegments" as="map( xs:string, array(function(*))+ )*" >
         <xsl:param name="jsonpathQuery" as="xs:string" />

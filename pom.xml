@@ -6,7 +6,7 @@
 
     <groupId>org.xmljacquard</groupId>
     <artifactId>ajp</artifactId>
-    <version>0.0.6</version>
+    <version>0.0.7</version>
 
     <name>ajp -- A JSONPATH Processor</name>
     <description>An XSLT package that implements RFC9535 using ixml (Invisible Xml)</description>

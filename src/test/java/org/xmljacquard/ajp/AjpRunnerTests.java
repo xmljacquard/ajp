@@ -83,10 +83,10 @@ public class AjpRunnerTests {
         final String   queryArg = "{ \"a\" : { \"b\" : { \"c\" : \"hello\" } } }";
 
         final AjpRunner runner = new AjpRunner().withQuery(query);
-        final XdmValue  nodeList      = runner.getNodelist(queryArg);
-        final XdmValue  values        = runner.arrayOfValues(nodeList);
-        final XdmValue  paths         = runner.arrayOfPaths(nodeList);
-        final XdmValue  nodes         = runner.arrayOfNodes(nodeList);
+        final XdmValue  nodelist      = runner.getNodelist(queryArg);
+        final XdmValue  values        = runner.arrayOfValues(nodelist);
+        final XdmValue  paths         = runner.arrayOfPaths(nodelist);
+        final XdmValue  nodes         = runner.arrayOfNodes(nodelist);
 
         assertThat(runner.serializeToJson(values), equalTo("[\"hello\"]"));
         assertThat(runner.serializeToJson(paths),  equalTo("[\"$['a']['b']['c']\"]"));
