@@ -79,10 +79,10 @@ public class AjpRunnerTests {
 
     @Test
     public void can_serialize_to_json() throws SaxonApiException {
-        final String   query    = "$.a.b.c";
-        final String   queryArg = "{ \"a\" : { \"b\" : { \"c\" : \"hello\" } } }";
+        final String query    = "$.a.b.c";
+        final String queryArg = "{ \"a\" : { \"b\" : { \"c\" : \"hello\" } } }";
 
-        final AjpRunner runner = new AjpRunner().withQuery(query);
+        final AjpRunner runner        = new AjpRunner().withQuery(query);
         final XdmValue  nodelist      = runner.getNodelist(queryArg);
         final XdmValue  values        = runner.arrayOfValues(nodelist);
         final XdmValue  paths         = runner.arrayOfPaths(nodelist);
