@@ -75,7 +75,7 @@
          <tbody>
             <tr class="centered consensusGreen">
                <td>Results Match Consensus Values in Order</td>
-               <td>148</td>
+               <td>155</td>
             </tr>
             <tr class="centered consensusYellow">
                <td>Results Match Consensus Values in a Different Order</td>
@@ -83,21 +83,21 @@
             </tr>
             <tr class="centered consensusRed">
                <td>Results with a different value from the Consensus</td>
-               <td>3</td>
+               <td>2</td>
             </tr>
             <tr class="centered consensusOrange">
                <td>Tests for which there is No Consensus</td>
-               <td>96</td>
+               <td>91</td>
             </tr>
          </tbody>
          <tfoot class="summary normal-parse-error">
             <tr class="centered">
                <td>Total</td>
-               <td>257</td>
+               <td>258</td>
             </tr>
          </tfoot>
       </table>
-      <h3><em>N.B. For the <span class="consensusRed">3 results
+      <h3><em>N.B. For the <span class="consensusRed">2 results
                that are different</span>, the consensus results are not conformant with RFC9535</em></h3>
       <h2>Detailed Results</h2>
       <div class="table-container">
@@ -501,7 +501,7 @@
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[010:024:010]</td>
                   <td class="col-4" colspan="3">Parsing error in query line 1 column 4 unexpected character: '1'.</td>
-                  <td class="col-7 consensusRed">[10,20]</td>
+                  <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
                   <td class="centered col-0">40</td>
@@ -789,7 +789,7 @@
                   <td class="col-4">{"\'":"value"}</td>
                   <td class="col-5">["value"]</td>
                   <td class="col-6">["$['\\'']"]</td>
-                  <td class="col-7 consensusOrange">No consensus</td>
+                  <td class="col-7 consensusGreen">["value"]</td>
                </tr>
                <tr class="executing">
                   <td class="centered col-0">69</td>
@@ -1117,7 +1117,7 @@
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$...key</td>
                   <td class="col-4" colspan="3">Parsing error in query line 1 column 4 unexpected character: '.'.</td>
-                  <td class="col-7 consensusOrange">No consensus</td>
+                  <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="executing">
                   <td class="centered col-0">103</td>
@@ -1792,6 +1792,16 @@
                </tr>
                <tr class="executing">
                   <td class="centered col-0">177</td>
+                  <td class="col-1">filter_expression_with_equals_number_on_various_representations</td>
+                  <td class="centered col-2 parses ">✓</td>
+                  <td class="col-3">$[?(@.key==0)]</td>
+                  <td class="col-4">[{"key":0.0E0},{"key":0.0E0},{"key":-0},{"key":0.0E0}]</td>
+                  <td class="col-5">[{"key":0.0E0},{"key":0.0E0},{"key":-0},{"key":0.0E0}]</td>
+                  <td class="col-6">["$[0]","$[1]","$[2]","$[3]"]</td>
+                  <td class="col-7 consensusGreen">[{"key":0.0E0},{"key":0.0E0},{"key":0.0E0},{"key":0.0E0}]</td>
+               </tr>
+               <tr class="executing">
+                  <td class="centered col-0">178</td>
                   <td class="col-1">filter_expression_with_equals_number_with_fraction</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key==-0.123e2)]</td>
@@ -1801,7 +1811,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">178</td>
+                  <td class="centered col-0">179</td>
                   <td class="col-1">filter_expression_with_equals_number_with_leading_zeros</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.key==010)]</td>
@@ -1809,7 +1819,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">179</td>
+                  <td class="centered col-0">180</td>
                   <td class="col-1">filter_expression_with_equals_object</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.d=={"k":"v"})]</td>
@@ -1817,7 +1827,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">180</td>
+                  <td class="centered col-0">181</td>
                   <td class="col-1">filter_expression_with_equals_on_array_of_numbers</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@==42)]</td>
@@ -1827,7 +1837,7 @@
                   <td class="col-7 consensusGreen">[42]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">181</td>
+                  <td class="centered col-0">182</td>
                   <td class="col-1">filter_expression_with_equals_on_array_without_match</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key==43)]</td>
@@ -1837,7 +1847,7 @@
                   <td class="col-7 consensusGreen">[]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">182</td>
+                  <td class="centered col-0">183</td>
                   <td class="col-1">filter_expression_with_equals_on_object</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key==42)]</td>
@@ -1847,7 +1857,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">183</td>
+                  <td class="centered col-0">184</td>
                   <td class="col-1">filter_expression_with_equals_on_object_with_key_matching_query</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.id==2)]</td>
@@ -1857,7 +1867,7 @@
                   <td class="col-7 consensusGreen">[]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">184</td>
+                  <td class="centered col-0">185</td>
                   <td class="col-1">filter_expression_with_equals_string</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key=="value")]</td>
@@ -1867,7 +1877,7 @@
                   <td class="col-7 consensusGreen">[{"key":"value"}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">185</td>
+                  <td class="centered col-0">186</td>
                   <td class="col-1">filter_expression_with_equals_string_in_NFC</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key=="Motörhead")]</td>
@@ -1877,7 +1887,7 @@
                   <td class="col-7 consensusGreen">[{"key":"Motörhead"}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">186</td>
+                  <td class="centered col-0">187</td>
                   <td class="col-1">filter_expression_with_equals_string_with_current_object_literal</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key=="hi@example.com")]</td>
@@ -1887,7 +1897,7 @@
                   <td class="col-7 consensusGreen">[{"key":"hi@example.com"}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">187</td>
+                  <td class="centered col-0">188</td>
                   <td class="col-1">filter_expression_with_equals_string_with_dot_literal</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key=="some.value")]</td>
@@ -1897,7 +1907,7 @@
                   <td class="col-7 consensusGreen">[{"key":"some.value"}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">188</td>
+                  <td class="centered col-0">189</td>
                   <td class="col-1">filter_expression_with_equals_string_with_single_quotes</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key==\'value\')]</td>
@@ -1907,7 +1917,7 @@
                   <td class="col-7 consensusGreen">[{"key":"value"}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">189</td>
+                  <td class="centered col-0">190</td>
                   <td class="col-1">filter_expression_with_equals_string_with_unicode_character_escape</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key=="Mot\\u00f6rhead")]</td>
@@ -1917,17 +1927,17 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">190</td>
+                  <td class="centered col-0">191</td>
                   <td class="col-1">filter_expression_with_equals_true</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key==true)]</td>
                   <td class="col-4">[{"some":"some value"},{"key":true},{"key":false},{"key":null},{"key":"value"},{"key":""},{"key":0.0E0},{"key":1},{"key":-1},{"key":42},{"key":{}},{"key":[]}]</td>
                   <td class="col-5">[{"key":true}]</td>
                   <td class="col-6">["$[1]"]</td>
-                  <td class="col-7 consensusOrange">No consensus</td>
+                  <td class="col-7 consensusGreen">[{"key":true}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">191</td>
+                  <td class="centered col-0">192</td>
                   <td class="col-1">filter_expression_with_equals_with_path_and_path</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key1==@.key2)]</td>
@@ -1937,7 +1947,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">192</td>
+                  <td class="centered col-0">193</td>
                   <td class="col-1">filter_expression_with_equals_with_root_reference</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$.items[?(@.key==$.value)]</td>
@@ -1947,7 +1957,7 @@
                   <td class="col-7 consensusGreen">[{"key":42}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">193</td>
+                  <td class="centered col-0">194</td>
                   <td class="col-1">filter_expression_with_greater_than</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key&gt;42)]</td>
@@ -1957,7 +1967,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">194</td>
+                  <td class="centered col-0">195</td>
                   <td class="col-1">filter_expression_with_greater_than_or_equal</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key&gt;=42)]</td>
@@ -1967,7 +1977,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">195</td>
+                  <td class="centered col-0">196</td>
                   <td class="col-1">filter_expression_with_greater_than_string</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key&gt;"VALUE")]</td>
@@ -1977,7 +1987,7 @@
                   <td class="col-7 consensusGreen">[{"key":"alpha"},{"key":"value"}]</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">196</td>
+                  <td class="centered col-0">197</td>
                   <td class="col-1">filter_expression_with_in_array_of_values</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.d in [2, 3])]</td>
@@ -1985,7 +1995,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">197</td>
+                  <td class="centered col-0">198</td>
                   <td class="col-1">filter_expression_with_in_current_object</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(2 in @.d)]</td>
@@ -1993,7 +2003,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">198</td>
+                  <td class="centered col-0">199</td>
                   <td class="col-1">filter_expression_with_length_free_function</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(length(@) == 4)]</td>
@@ -2003,15 +2013,15 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">199</td>
+                  <td class="centered col-0">200</td>
                   <td class="col-1">filter_expression_with_length_function</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.length() == 4)]</td>
                   <td class="col-4" colspan="3">Parsing error in query line 1 column 13 unexpected character: '('.</td>
-                  <td class="col-7 consensusOrange">No consensus</td>
+                  <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">200</td>
+                  <td class="centered col-0">201</td>
                   <td class="col-1">filter_expression_with_length_property</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.length == 4)]</td>
@@ -2021,17 +2031,17 @@
                   <td class="col-7 consensusGreen">[]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">201</td>
+                  <td class="centered col-0">202</td>
                   <td class="col-1">filter_expression_with_less_than</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key&lt;42)]</td>
                   <td class="col-4">[{"key":0.0E0},{"key":42},{"key":-1},{"key":41},{"key":43},{"key":42.0001},{"key":41.9999},{"key":100},{"key":"43"},{"key":"42"},{"key":"41"},{"key":"value"},{"some":"value"}]</td>
                   <td class="col-5">[{"key":0.0E0},{"key":-1},{"key":41},{"key":41.9999}]</td>
                   <td class="col-6">["$[0]","$[2]","$[3]","$[6]"]</td>
-                  <td class="col-7 consensusOrange">No consensus</td>
+                  <td class="col-7 consensusGreen">[{"key":0.0E0},{"key":-1},{"key":41},{"key":41.9999}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">202</td>
+                  <td class="centered col-0">203</td>
                   <td class="col-1">filter_expression_with_less_than_or_equal</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key&lt;=42)]</td>
@@ -2041,7 +2051,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">203</td>
+                  <td class="centered col-0">204</td>
                   <td class="col-1">filter_expression_with_local_dot_key_and_null_in_data</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.key=\'value\')]</td>
@@ -2049,7 +2059,7 @@
                   <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">204</td>
+                  <td class="centered col-0">205</td>
                   <td class="col-1">filter_expression_with_multiplication</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.key*2==100)]</td>
@@ -2057,7 +2067,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">205</td>
+                  <td class="centered col-0">206</td>
                   <td class="col-1">filter_expression_with_negation_and_equals</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(!(@.key==42))]</td>
@@ -2067,7 +2077,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">206</td>
+                  <td class="centered col-0">207</td>
                   <td class="col-1">filter_expression_with_negation_and_equals_array_or_equals_true</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(!(@.d==["v1","v2"]) || (@.d == true))]</td>
@@ -2075,7 +2085,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">207</td>
+                  <td class="centered col-0">208</td>
                   <td class="col-1">filter_expression_with_negation_and_less_than</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(!(@.key&lt;42))]</td>
@@ -2085,7 +2095,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">208</td>
+                  <td class="centered col-0">209</td>
                   <td class="col-1">filter_expression_with_negation_and_without_value</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(!@.key)]</td>
@@ -2095,7 +2105,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">209</td>
+                  <td class="centered col-0">210</td>
                   <td class="col-1">filter_expression_with_non_singular_existence_test</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.a.*)]</td>
@@ -2105,7 +2115,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">210</td>
+                  <td class="centered col-0">211</td>
                   <td class="col-1">filter_expression_with_not_equals</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key!=42)]</td>
@@ -2115,7 +2125,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">211</td>
+                  <td class="centered col-0">212</td>
                   <td class="col-1">filter_expression_with_not_equals_array_or_equals_true</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?((@.d!=["v1","v2"]) || (@.d == true))]</td>
@@ -2123,7 +2133,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">212</td>
+                  <td class="centered col-0">213</td>
                   <td class="col-1">filter_expression_with_parent_axis_operator</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[*].bookmarks[?(@.page == 45)]^^^</td>
@@ -2131,7 +2141,7 @@
                   <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">213</td>
+                  <td class="centered col-0">214</td>
                   <td class="col-1">filter_expression_with_regular_expression</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.name=~/hello.*/)]</td>
@@ -2139,7 +2149,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">214</td>
+                  <td class="centered col-0">215</td>
                   <td class="col-1">filter_expression_with_regular_expression_from_member</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.name=~/@.pattern/)]</td>
@@ -2147,7 +2157,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">215</td>
+                  <td class="centered col-0">216</td>
                   <td class="col-1">filter_expression_with_set_wise_comparison_to_scalar</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@[*]&gt;=4)]</td>
@@ -2155,7 +2165,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">216</td>
+                  <td class="centered col-0">217</td>
                   <td class="col-1">filter_expression_with_set_wise_comparison_to_set</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$.x[?(@[*]&gt;=$.y[*])]</td>
@@ -2163,7 +2173,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">217</td>
+                  <td class="centered col-0">218</td>
                   <td class="col-1">filter_expression_with_single_equal</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.key=42)]</td>
@@ -2171,7 +2181,7 @@
                   <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">218</td>
+                  <td class="centered col-0">219</td>
                   <td class="col-1">filter_expression_with_subfilter</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.a[?(@.price&gt;10)])]</td>
@@ -2181,7 +2191,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">219</td>
+                  <td class="centered col-0">220</td>
                   <td class="col-1">filter_expression_with_subpaths</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.a.b==3)]</td>
@@ -2191,7 +2201,7 @@
                   <td class="col-7 consensusGreen">[{"a":{"b":3}}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">220</td>
+                  <td class="centered col-0">221</td>
                   <td class="col-1">filter_expression_with_subpaths_deeply_nested</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.a.b.c==3)]</td>
@@ -2201,7 +2211,7 @@
                   <td class="col-7 consensusGreen">[{"a":{"b":{"c":3}}}]</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">221</td>
+                  <td class="centered col-0">222</td>
                   <td class="col-1">filter_expression_with_subtraction</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.key-50==-100)]</td>
@@ -2209,7 +2219,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">222</td>
+                  <td class="centered col-0">223</td>
                   <td class="col-1">filter_expression_with_tautological_comparison</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(1==1)]</td>
@@ -2219,7 +2229,7 @@
                   <td class="col-7 consensusGreen">[1,3,"nice",true,null,false,{},[],-1,0.0E0,""]</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">223</td>
+                  <td class="centered col-0">224</td>
                   <td class="col-1">filter_expression_with_triple_equal</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(@.key===42)]</td>
@@ -2227,7 +2237,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">224</td>
+                  <td class="centered col-0">225</td>
                   <td class="col-1">filter_expression_with_value</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key)]</td>
@@ -2237,7 +2247,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">225</td>
+                  <td class="centered col-0">226</td>
                   <td class="col-1">filter_expression_with_value_after_dot_notation_with_wildcard_on_array_of_objects</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$.*[?(@.key)]</td>
@@ -2247,7 +2257,7 @@
                   <td class="col-7 consensusGreen">[]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">226</td>
+                  <td class="centered col-0">227</td>
                   <td class="col-1">filter_expression_with_value_after_recursive_descent</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$..[?(@.id)]</td>
@@ -2257,7 +2267,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">227</td>
+                  <td class="centered col-0">228</td>
                   <td class="col-1">filter_expression_with_value_false</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(false)]</td>
@@ -2265,7 +2275,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">228</td>
+                  <td class="centered col-0">229</td>
                   <td class="col-1">filter_expression_with_value_from_recursive_descent</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@..child)]</td>
@@ -2275,7 +2285,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">229</td>
+                  <td class="centered col-0">230</td>
                   <td class="col-1">filter_expression_with_value_null</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(null)]</td>
@@ -2283,7 +2293,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">230</td>
+                  <td class="centered col-0">231</td>
                   <td class="col-1">filter_expression_with_value_true</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[?(true)]</td>
@@ -2291,7 +2301,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">231</td>
+                  <td class="centered col-0">232</td>
                   <td class="col-1">filter_expression_without_parens</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?@.key==42]</td>
@@ -2301,7 +2311,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">232</td>
+                  <td class="centered col-0">233</td>
                   <td class="col-1">filter_expression_without_value</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key)]</td>
@@ -2311,7 +2321,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">233</td>
+                  <td class="centered col-0">234</td>
                   <td class="col-1">function_sum</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$.data.sum()</td>
@@ -2319,7 +2329,7 @@
                   <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">234</td>
+                  <td class="centered col-0">235</td>
                   <td class="col-1">parens_notation</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$(key,more)</td>
@@ -2327,15 +2337,15 @@
                   <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">235</td>
+                  <td class="centered col-0">236</td>
                   <td class="col-1">recursive_descent</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$..</td>
                   <td class="col-4" colspan="3">Parsing error in query line 1 column 2 unexpected character: ''.</td>
-                  <td class="col-7 consensusOrange">No consensus</td>
+                  <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">236</td>
+                  <td class="centered col-0">237</td>
                   <td class="col-1">recursive_descent_after_dot_notation</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$.key..</td>
@@ -2343,7 +2353,7 @@
                   <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">237</td>
+                  <td class="centered col-0">238</td>
                   <td class="col-1">recursive_descent_on_nested_arrays</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$..*</td>
@@ -2353,7 +2363,7 @@
                   <td class="col-7 consensusGreen">[[0.0E0],[1],0.0E0,1]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">238</td>
+                  <td class="centered col-0">239</td>
                   <td class="col-1">root</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$</td>
@@ -2363,7 +2373,7 @@
                   <td class="col-7 consensusGreen">[{"another key":{"complex":["a",1]},"key":"value"}]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">239</td>
+                  <td class="centered col-0">240</td>
                   <td class="col-1">root_on_scalar</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$</td>
@@ -2373,7 +2383,7 @@
                   <td class="col-7 consensusGreen">[42]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">240</td>
+                  <td class="centered col-0">241</td>
                   <td class="col-1">root_on_scalar_false</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$</td>
@@ -2383,7 +2393,7 @@
                   <td class="col-7 consensusGreen">[false]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">241</td>
+                  <td class="centered col-0">242</td>
                   <td class="col-1">root_on_scalar_true</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$</td>
@@ -2393,7 +2403,7 @@
                   <td class="col-7 consensusGreen">[true]</td>
                </tr>
                <tr class="normal-parse-error">
-                  <td class="centered col-0">242</td>
+                  <td class="centered col-0">243</td>
                   <td class="col-1">script_expression</td>
                   <td class="centered col-2 parse-error ">✗</td>
                   <td class="col-3">$[(@.length-1)]</td>
@@ -2401,7 +2411,7 @@
                   <td class="col-7 consensusGreen">Not supported</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">243</td>
+                  <td class="centered col-0">244</td>
                   <td class="col-1">union</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[0,1]</td>
@@ -2411,7 +2421,7 @@
                   <td class="col-7 consensusGreen">["first","second"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">244</td>
+                  <td class="centered col-0">245</td>
                   <td class="col-1">union_with_duplication_from_array</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[0,0]</td>
@@ -2421,7 +2431,7 @@
                   <td class="col-7 consensusGreen">["a","a"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">245</td>
+                  <td class="centered col-0">246</td>
                   <td class="col-1">union_with_duplication_from_object</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[\'a\',\'a\']</td>
@@ -2431,7 +2441,7 @@
                   <td class="col-7 consensusGreen">[1,1]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">246</td>
+                  <td class="centered col-0">247</td>
                   <td class="col-1">union_with_filter</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[?(@.key&lt;3),?(@.key&gt;6)]</td>
@@ -2441,7 +2451,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">247</td>
+                  <td class="centered col-0">248</td>
                   <td class="col-1">union_with_keys</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[\'key\',\'another\']</td>
@@ -2451,7 +2461,7 @@
                   <td class="col-7 consensusGreen">["value","entry"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">248</td>
+                  <td class="centered col-0">249</td>
                   <td class="col-1">union_with_keys_after_array_slice</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[:][\'c\',\'d\']</td>
@@ -2461,7 +2471,7 @@
                   <td class="col-7 consensusGreen">["cc1","dd1","cc2","dd2"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">249</td>
+                  <td class="centered col-0">250</td>
                   <td class="col-1">union_with_keys_after_bracket_notation</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[0][\'c\',\'d\']</td>
@@ -2471,7 +2481,7 @@
                   <td class="col-7 consensusGreen">["cc1","dd1"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">250</td>
+                  <td class="centered col-0">251</td>
                   <td class="col-1">union_with_keys_after_dot_notation_with_wildcard</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$.*[\'c\',\'d\']</td>
@@ -2481,7 +2491,7 @@
                   <td class="col-7 consensusGreen">["cc1","dd1","cc2","dd2"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">251</td>
+                  <td class="centered col-0">252</td>
                   <td class="col-1">union_with_keys_after_recursive_descent</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$..[\'c\',\'d\']</td>
@@ -2491,7 +2501,7 @@
                   <td class="col-7 consensusYellow">["cc1","cc2","cc3","cc5","dd1","dd2","dd4"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">252</td>
+                  <td class="centered col-0">253</td>
                   <td class="col-1">union_with_keys_on_object_without_key</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[\'missing\',\'key\']</td>
@@ -2501,7 +2511,7 @@
                   <td class="col-7 consensusGreen">["value"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">253</td>
+                  <td class="centered col-0">254</td>
                   <td class="col-1">union_with_numbers_in_decreasing_order</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[4,1]</td>
@@ -2511,7 +2521,7 @@
                   <td class="col-7 consensusGreen">[5,2]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">254</td>
+                  <td class="centered col-0">255</td>
                   <td class="col-1">union_with_repeated_matches_after_dot_notation_with_wildcard</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$.*[0,:5]</td>
@@ -2521,7 +2531,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">255</td>
+                  <td class="centered col-0">256</td>
                   <td class="col-1">union_with_slice_and_number</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[1:3,4]</td>
@@ -2531,7 +2541,7 @@
                   <td class="col-7 consensusOrange">No consensus</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">256</td>
+                  <td class="centered col-0">257</td>
                   <td class="col-1">union_with_spaces</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[ 0 , 1 ]</td>
@@ -2541,7 +2551,7 @@
                   <td class="col-7 consensusGreen">["first","second"]</td>
                </tr>
                <tr class="executing">
-                  <td class="centered col-0">257</td>
+                  <td class="centered col-0">258</td>
                   <td class="col-1">union_with_wildcard_and_number</td>
                   <td class="centered col-2 parses ">✓</td>
                   <td class="col-3">$[*,1]</td>
