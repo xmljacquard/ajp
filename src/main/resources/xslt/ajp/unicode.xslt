@@ -149,7 +149,6 @@
 
     <xsl:variable name="CH_001F" as="xs:string" select="codepoints-to-string(31)"  />
     <xsl:variable name="CH_007F" as="xs:string" select="codepoints-to-string(127)" />
-    <xsl:variable name="CH_009F" as="xs:string" select="codepoints-to-string(159)" />
 
     <xsl:variable name="NON_PRINTING_REGEX"        as="xs:string"
                   select="concat( '[', $CH_0001, '-', $CH_001F, ']' )" />
