@@ -63,8 +63,8 @@ string-literal          = ( -#22 , double-quoted* , -#22 ) |     { "string" }
                           [ #23-#26 ]         |     { omit 0x27 '  }
                           [ #28-#5B ]         |     { omit 0x5C \  }
                           [ #5D-#D7FF ]       |     { skip surrogate code points }
-                          [ #E000-#FFEF ]     |     { omit   #FFF0 -   #FFFF }
-                          [ #10000-#10FFEF ]  .     { omit #10FFF0 - #10FFFF }
+                          [ #E000-#FFFC ]     |     { omit   #FFFD -   #FFFF }
+                          [ #10000-#10FFFD ]  .     { omit #10FFFE - #10FFFF }
                                                     { N.B. for RFC9535, should allow #E000-#10FFF }
 
 -single-escaped         = ( ESC , single-escapable ) .
