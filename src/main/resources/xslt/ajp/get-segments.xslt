@@ -224,9 +224,9 @@
                               then xs:numeric(number)
                               else if (exists(string-literal))
                               then ajp:expand(string-literal)
-                              else if (exists(true))
+                              else if (exists(child::true))
                               then true()
-                              else if (exists(false))
+                              else if (exists(child::false))
                               then false()
                               else if (exists(null))
                               then $NULL
