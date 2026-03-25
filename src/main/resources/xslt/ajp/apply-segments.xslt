@@ -78,8 +78,16 @@
                              " />
     </xsl:function>
 
-    <xsl:variable name="BS" as="xs:string" select="codepoints-to-string(8)"  />
-    <xsl:variable name="FF" as="xs:string" select="codepoints-to-string(12)" />
+    <xsl:variable name="isJavascript" as="xs:boolean" static="yes"
+                  select="system-property('xsl:product-name') eq 'SaxonJS'" />
+    <xsl:variable name="isJava"       as="xs:boolean" static="yes"
+                  select="system-property('xsl:product-name') eq 'SAXON'" />
+
+    <xsl:variable name="BS" as="xs:string" select="codepoints-to-string(8)"  use-when="$isJava"/>
+    <xsl:variable name="FF" as="xs:string" select="codepoints-to-string(12)" use-when="$isJava"/>
+
+    <xsl:variable name="BS" as="xs:string" select="codepoints-to-string(8)"  use-when="$isJavascript"/>
+    <xsl:variable name="FF" as="xs:string" select="codepoints-to-string(12)" use-when="$isJavascript"/>
 
     <xsl:function name="ajp:escape" as="xs:string" >
         <xsl:param name="s" as="xs:string" />
