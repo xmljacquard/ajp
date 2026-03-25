@@ -86,8 +86,8 @@
     <xsl:variable name="BS" as="xs:string" select="codepoints-to-string(8)"  use-when="$isJava"/>
     <xsl:variable name="FF" as="xs:string" select="codepoints-to-string(12)" use-when="$isJava"/>
 
-    <xsl:variable name="BS" as="xs:string" select="codepoints-to-string(8)"  use-when="$isJavascript"/>
-    <xsl:variable name="FF" as="xs:string" select="codepoints-to-string(12)" use-when="$isJavascript"/>
+    <xsl:variable name="BS" as="xs:string" select="'&#x2408;'" use-when="$isJavascript"/>
+    <xsl:variable name="FF" as="xs:string" select="'&#x240C;'" use-when="$isJavascript"/>
 
     <xsl:function name="ajp:escape" as="xs:string" >
         <xsl:param name="s" as="xs:string" />
