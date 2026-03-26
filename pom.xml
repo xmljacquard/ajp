@@ -6,7 +6,7 @@
 
     <groupId>org.xmljacquard</groupId>
     <artifactId>ajp</artifactId>
-    <version>0.0.7</version>
+    <version>0.0.8</version>
 
     <name>ajp -- A JSONPATH Processor</name>
     <description>An XSLT package that implements RFC9535 using ixml (Invisible Xml)</description>
@@ -50,7 +50,8 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <nineml_version>3.3.3</nineml_version>
+        <nineml_version>3.3.4</nineml_version>
+        <saxon_version>12.9</saxon_version>
     </properties>
 
     <build>
@@ -108,35 +109,23 @@
     </build>
 
     <dependencies>
-        <!-- N.B. Temporary exclusions of Saxon-EE due to regression in dependencies in version 3.3.3 -->
+
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>${saxon_version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.nineml</groupId>
             <artifactId>coffeepot</artifactId>
             <version>${nineml_version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.saxonica</groupId>
-                    <artifactId>Saxon-EE</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.nineml</groupId>
             <artifactId>coffeesacks</artifactId>
             <version>${nineml_version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.saxonica</groupId>
-                    <artifactId>Saxon-EE</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>net.sf.saxon</groupId>
-            <artifactId>Saxon-HE</artifactId>
-            <version>12.9</version>
         </dependency>
 
         <dependency>
