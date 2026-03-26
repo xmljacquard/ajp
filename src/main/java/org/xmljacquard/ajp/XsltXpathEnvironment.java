@@ -21,8 +21,12 @@ public class XsltXpathEnvironment {
         return getProcessor(TRACING_OFF);
     }
 
-    @SuppressWarnings("SameParameterValue")
     public static Processor getProcessor(final boolean isTracing) {
+        return getProcessor(isTracing, true);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    public static Processor getProcessor(final boolean isTracing, final boolean withNineml) {
         final Processor processor = new Processor(true);
 
         // N.B. Allow import modules to be found on the classpath from relative URIs
@@ -32,10 +36,12 @@ public class XsltXpathEnvironment {
         processor.getUnderlyingConfiguration().setXMLVersion(XML11);
 
         // Registration of extension functions implementing the ixml processor, nineml by ntw.
-        try {
-            new RegisterCoffeeSacks().initialize(processor.getUnderlyingConfiguration());
-        } catch (final TransformerException e) {
-            throw new RuntimeException(e);
+        if (withNineml) {
+            try {
+                new RegisterCoffeeSacks().initialize(processor.getUnderlyingConfiguration());
+            } catch (final TransformerException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // Can turn on tracing for individual queries if needed for debugging
@@ -59,8 +65,13 @@ public class XsltXpathEnvironment {
         return compiler.compile(source);
     }
 
-    private static StreamSource getPackageSource() {
+    static StreamSource getPackageSource() {
         //noinspection DataFlowIssue
         return new StreamSource(THIS.getResource("/xslt/ajp/ajp.xslt").toString());
+    }
+
+    static StreamSource getPackageJsSource() {
+        //noinspection DataFlowIssue
+        return new StreamSource(THIS.getResource("/xslt/ajp/ajp-js.xslt").toString());
     }
 }
