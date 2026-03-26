@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Egregiously inspired by Martin Honnen's work on xslt3fiddle and associated.
+     Thanking Martin for his important support of XSLT over the years in stackoverflow, github and others.
+
+     https://github.com/martin-honnen/martin-honnen.github.io/tree/master/xpath31fiddle
+  -->
+
+<!--
+     Further egregious inspiration from John Lumley's jωiXML.
+     Thanking John for his many contributions to iXML and XPath 3/4, amongst his other contributions.
+
+     https://github.com/johnlumley/johnlumley.github.io/blob/main/jwiXML.xhtml
+  -->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JSONPATH Evaluator using ixml (jωiXML) and XSLT (SaxonJS-2.7)</title>
+
+    <link rel="stylesheet" href="css/ace-fiddle.css"       />
+    <link rel="icon"       href="favicon.png" sizes="32x32"/>
+
+    <script src="SaxonJS-2.7/SaxonJS2.rt.js" type="text/javascript" language="JavaScript"></script>
+    <script src="jwixml/jwiXML.adv.cls.js"   type="text/javascript" language="JavaScript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/ext-language_tools.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/mode-xml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/mode-html.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/mode-json.js"></script>
+</head>
+
+<body class="container" >
+    <header>
+        <h1>JSONPATH Evaluator using ixml (jωiXML) and XSLT (SaxonJS-2.7)</h1>
+        <p>
+        <input type="button" id="evaluate" value="evaluate"
+               onclick='console.log(queryArgEditor.getValue());
+                        console.log(typeof JSON.parse(queryArgEditor.getValue()));
+                        let query             = queryEditor   .getValue();
+                        let queryArg          = queryArgEditor.getValue();
+                        let options  = { stylesheetLocation: "xslt/ajp.sef.json",
+                                         initialFunction:    "Q{http://xmljacquard.org/ajp}evaluateToArray",
+                                         functionParams:     [ query, queryArg ],
+                                         destination:        "raw",
+                                         logLevel:           10
+                                       };
+                        console.log(options);
+                        let output = SaxonJS.transform(options);
+                        console.log("principalResult");
+                        console.log(output.principalResult[0]);
+                        resultEditor.setValue(JSON.stringify(output.principalResult))
+                        '
+        />
+    </header>
+    <div class="view-container" >
+        <main role="main" id="main" class="pb-3 view-container">
+            <section class="query-row">
+                <label for="query-editor" class="large-label">Query</label>
+                <p>
+                <div id="query-editor" class="editor query-lines"></div>
+                <!--
+                <textarea id="query" rows="1" cols="50" class="ace_text-input" ></textarea>
+                -->
+            </section>
+            <p>
+            <section class="grid-row">
+                <label for="query-arg-editor" class="large-label">Query Arg</label>
+                <p>
+                <div id="query-arg-editor" class="editor"></div>
+                <!--
+                <textarea id="query_arg" rows="10" cols="50" class="ace_text-input" ></textarea>
+                -->
+            </section>
+            <p>
+            <section class="grid-row">
+                <label for="result-editor" class="large-label">Result</label>
+                <p>
+                <div id="result-editor" class="editor"></div>
+                <!--
+                <textarea id="result" rows="10" cols="50"></textarea>
+                -->
+            </section>
+        </main>
+    </div>
+
+    <!--
+    <script src="js/frame-write.js"></script>
+    <script src="js/ace-modes.js"></script>
+    <script src="js/transform.js"></script>
+    -->
+    <script src="js/ace-editors-init.js"></script>
+    <!--
+    <script src="js/event-listeners-init.js"></script>
+    <script src="js/init-examples.js"></script>
+    -->
+
+</body>
+
+</html>
