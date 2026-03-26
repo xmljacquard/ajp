@@ -3,12 +3,14 @@ package org.xmljacquard.ajp;
 import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
+import java.io.File;
 import java.net.URISyntaxException;
 
 import static net.sf.saxon.s9api.XdmAtomicValue.makeAtomicValue;
 import static net.sf.saxon.s9api.XdmFunctionItem.getSystemFunction;
 import static net.sf.saxon.s9api.XdmValue.makeValue;
 import static org.xmljacquard.ajp.XsltXpathEnvironment.*;
+import static org.xmljacquard.ajp.XsltXpathEnvironment.getProcessor;
 
 // Compiles a jsonpath query and allows it to be run against multiple json query arguments (i.e. json documents)
 public class AjpRunner {
@@ -78,7 +80,7 @@ public class AjpRunner {
         return xsltExecutable.load30().callFunction(functionName, new XdmValue[] { nodelist } );
     }
 
-    private static XsltExecutable getXsltExecutable()  {
+    static XsltExecutable getXsltExecutable()  {
         try {
             final Processor     processor = getProcessor();
             final XsltCompiler  compiler  = getXsltCompiler(processor);
@@ -95,7 +97,7 @@ public class AjpRunner {
     }
 
     private static XdmValue getJsonpathProcessor(final Xslt30Transformer xslt30Transformer,
-                                                        final XdmValue[]        parameters) throws SaxonApiException {
+                                                 final XdmValue[]        parameters) throws SaxonApiException {
         return xslt30Transformer.callFunction(GET_PROCESSOR, parameters);
     }
 
@@ -132,5 +134,40 @@ public class AjpRunner {
                 .stream()
                 .asString();
     }
+
+    public static void main(final String[] args) throws URISyntaxException, SaxonApiException {
+        writeAjpSefJS(new File("doc/evaluator/xslt/ajp.sef.json"));
+    }
+
+    // For writing out the SEF file: requires Saxon-EE
+    // This version uses jwiXML instead of coffeesacks, but looking like coffeesacks ...
+    static void writeAjpSefJS(final File output) throws SaxonApiException, URISyntaxException {
+        final Processor    processor = getProcessor(TRACING_OFF, false);
+        final XsltCompiler compiler  = processor.newXsltCompiler();
+        compiler.setTargetEdition("JS");
+        compiler.setRelocatable(true);
+        final XsltPackage  ajpPackage = compiler.compilePackage(getPackageJsSource());
+
+        ajpPackage.save(output);
+    }
+
+    // For writing out the SEF file: requires Saxon-EE
+    // As per instructions in https://saxonica.plan.io/issues/6971 (thanks, Debbie!)
+    // N.B. Never used
+
+    /*
+    static void writeAjpRunnerSefJS(final File output) throws SaxonApiException, URISyntaxException {
+        final Processor    processor  = getProcessor(TRACING_OFF, false);
+        final XsltCompiler compiler1  = processor.newXsltCompiler();
+        final XsltPackage  ajpPackage = compiler1.compilePackage(getPackageJsSource());
+
+        final XsltCompiler compiler2  = processor.newXsltCompiler();
+        compiler2.importPackage(ajpPackage);
+        compiler2.setTargetEdition("JS");
+
+        final XsltPackage runnerPackage = compiler2.compilePackage(getRunnerJsSource());
+        runnerPackage.save(output);
+    }
+    */
 
 }
