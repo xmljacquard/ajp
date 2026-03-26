@@ -49,7 +49,7 @@
                               return ajp:convertNulls($returnNodelist)" />
     </xsl:function>
 
-    <xsl:function name="ajp:getProcessor" as="function(item()?) as map(xs:string, item()?)*" >
+    <xsl:function name="ajp:getProcessor" as="function(item()?) as map(xs:string, item()?)*" visibility="public">
         <xsl:param name="jsonpathQuery" as="xs:string" />
 
         <xsl:sequence select="ajp:applySegments(?, ajp:getSegments($jsonpathQuery))" />
