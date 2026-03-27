@@ -38,21 +38,15 @@
         <h1>JSONPATH Evaluator using ixml (jωiXML) and XSLT (SaxonJS-2.7)</h1>
         <p>
         <input type="button" id="evaluate" value="evaluate"
-               onclick='console.log(queryArgEditor.getValue());
-                        console.log(typeof JSON.parse(queryArgEditor.getValue()));
-                        let query             = queryEditor   .getValue();
-                        let queryArg          = queryArgEditor.getValue();
+               onclick='let query    = queryEditor   .getValue();
+                        let queryArg = queryArgEditor.getValue();
                         let options  = { stylesheetLocation: "xslt/ajp.sef.json",
                                          initialFunction:    "Q{http://xmljacquard.org/ajp}evaluateToArray",
                                          functionParams:     [ query, queryArg ],
-                                         destination:        "raw",
-                                         logLevel:           10
+                                         destination:        "raw"
                                        };
-                        console.log(options);
                         let output = SaxonJS.transform(options);
-                        console.log("principalResult");
-                        console.log(output.principalResult[0]);
-                        resultEditor.setValue(JSON.stringify(output.principalResult))
+                        resultEditor.setValue(JSON.stringify(output.principalResult, null, 2))
                         '
         />
     </header>
