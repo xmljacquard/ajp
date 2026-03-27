@@ -35,20 +35,11 @@
         <xsl:param name="jsonpathQuery" as="xs:string" />
         <xsl:param name="rootString"    as="xs:string" />
 
-        <!-- REVERT REVERT -->
         <xsl:variable name="processor" as="function(*)" select="ajp:getProcessor($jsonpathQuery)" />
-        <xsl:message select="'processor retrieved'" />
 
         <xsl:variable name="root" as="item()?" select="parse-json($rootString)" />
-        <xsl:message select="'root type is : ' || ajp:getType($root)" />
-        <xsl:message select="'root is: ' || serialize($root, map { 'method' : 'json'})" />
 
-        <xsl:variable name="finalOutput" as="item()*" select="$processor($root)" />
-
-        <xsl:message select="'finalOutput: count: ' || count($finalOutput)" />
-        <xsl:message select="'finalOutput: type: '  || ajp:getType($finalOutput)" />
-
-        <xsl:sequence select="$finalOutput" />
+        <xsl:sequence select="$processor($root)" />
     </xsl:function>
 
     <xsl:function name="ajp:evaluateToArray" as="array(map(xs:string, item()?))" visibility="public">
