@@ -81,12 +81,12 @@
     <xsl:variable name="HIGH_START"         as="xs:integer" select="55296" />  <!-- 0xD800  -->
     <xsl:variable name="LOW_START"          as="xs:integer" select="56320" />  <!-- 0xDC00  -->
 
-    <xsl:variable name="CH_0001" as="xs:string" select="codepoints-to-string(1)"     />
-    <xsl:variable name="CH_FFFD" as="xs:string" select="codepoints-to-string(65533)" />
+    <xsl:variable name="CH_010000" as="xs:string" select="codepoints-to-string(65536)"   />
+    <xsl:variable name="CH_10FFFD" as="xs:string" select="codepoints-to-string(1114109)" />
 
-    <!-- Match chars that are not in the Basic Multilingual Plan (U+0000 to U+FFFF) minus non-XML chars -->
+    <!-- Match chars that are not in the Basic Multilingual Plan (BMP) (U+0000 to U+FFFF) -->
     <xsl:variable name="HIGH_PLANE_REGEX"        as="xs:string"
-                  select="concat('[^', $CH_0001, '-', $CH_FFFD, ']')" />
+                  select="concat('[', $CH_010000, '-', $CH_10FFFD, ']')" />
 
     <xsl:function name="ajp:replaceHigherPlaneChars" as="xs:string" >
         <xsl:param name="s" as="xs:string" />
@@ -147,11 +147,13 @@
                               else codepoints-to-string($int + $A_CODEPOINT - 10)" />
     </xsl:function>
 
-    <xsl:variable name="CH_001F" as="xs:string" select="codepoints-to-string(31)"  />
-    <xsl:variable name="CH_007F" as="xs:string" select="codepoints-to-string(127)" />
+    <xsl:variable name="CH_0020" as="xs:string" select="codepoints-to-string(32)"    />
+    <xsl:variable name="CH_D7FF" as="xs:string" select="codepoints-to-string(55295)" />
+    <xsl:variable name="CH_E000" as="xs:string" select="codepoints-to-string(57344)" />
 
+    <!-- TODO Remove the surrogate range as well as the FFFE and FFFF chars from each plane -->
     <xsl:variable name="NON_PRINTING_REGEX"        as="xs:string"
-                  select="concat( '[', $CH_0001, '-', $CH_001F, ']' )" />
+                  select="concat( '[^', $CH_0020, '-', $CH_10FFFD, ']' )" />
 
     <!-- https://en.wikipedia.org/wiki/List_of_Unicode_characters#Control_codes -->
     <xsl:function name="ajp:replaceNonPrintingChars" as="xs:string" >
